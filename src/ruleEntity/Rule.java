@@ -1,4 +1,4 @@
-package RuleEntity;
+package ruleEntity;
 
 public class Rule {
     private String name;
