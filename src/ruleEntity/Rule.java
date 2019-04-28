@@ -20,5 +20,7 @@ public class Rule {
         this.type = type;
     }
 
-    public void excute(){System.out.println("haha");}
+    public static void excute(){
+        System.out.println("haha");
+    }
 }
