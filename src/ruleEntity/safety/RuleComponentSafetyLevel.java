@@ -1,6 +1,6 @@
-package ruleEntity.base;
+package ruleEntity.safety;
 
-public class RuleComponentType {
+public class RuleComponentSafetyLevel {
     public static void excute() {
         System.out.println("haha");
     }

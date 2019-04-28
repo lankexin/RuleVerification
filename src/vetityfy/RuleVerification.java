@@ -10,7 +10,7 @@ public class RuleVerification {
      * @param type
      */
     public static void verify(String type)throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        for (Class item : getClasssFromPackage("ruleEntity."+type)) {
+        for (Class item : getClasssFromPackage("ruleEntity"+type)) {
             Method method = item.getDeclaredMethod("excute");
             System.out.println(item);
             method.invoke(null);
