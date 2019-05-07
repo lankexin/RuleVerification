@@ -1,6 +1,6 @@
 package ruleEntity;
 
-public class Rule {
+public class RuleTemplate {
     private String name;
     private String type;
 

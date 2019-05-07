@@ -2,11 +2,14 @@ package vetityfy;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
+import utils.XMLParseUtil;
+
 import static utils.PackageUtil.getClasssFromPackage;
 
 public class RuleVerification {
     /**
-     * 此处类型分为base，safety，realTime,all
+     * 此处类型分为base，safety，realTime, all
      * @param type
      */
     public static void verify(String type)throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
@@ -27,6 +30,12 @@ public class RuleVerification {
     }
 
     public static void main(String[] args)throws NoSuchMethodException, IllegalAccessException, InvocationTargetException{
-        RuleVerification.verify("all");
+        //RuleVerification.verify("all");
+        
+        String inputPath = "FlightSystem.xml";
+        XMLParseUtil mXMLParseUtil = new XMLParseUtil();
+        mXMLParseUtil.parseXML(inputPath);
+        //System.out.print(mXMLParseUtil.parseXML(inputPath));
+        
     }
 }
