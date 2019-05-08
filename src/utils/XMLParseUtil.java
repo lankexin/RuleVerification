@@ -15,7 +15,7 @@ public class XMLParseUtil {
 		
 	}
 	
-	public List<HashMap<String, String>> parseXML(String inputPath) {
+	public static List<HashMap<String, String>> parseXML(String inputPath) {
 		List<HashMap<String, String>> xmlContent = new ArrayList<>();
 		
 		SAXReader reader = new SAXReader();
@@ -32,8 +32,8 @@ public class XMLParseUtil {
 				List<Attribute> componentAttrs = component.attributes();
 				
 				for (Attribute attr : componentAttrs) {
-					System.out.print("属性名: " + attr.getName() + "   属性值: "
-							+ attr.getValue() + "\n");
+//					System.out.print("属性名: " + attr.getName() + "   属性值: "
+//							+ attr.getValue() + "\n");
 					
 				}
 				
@@ -43,15 +43,15 @@ public class XMLParseUtil {
 					HashMap<String, String> tempElement = new HashMap<>();
 					Element componentChild = (Element) itt.next();
 
-					System.out.print("节点名: " + componentChild.getName() + 
-							"   节点值: " + componentChild.getStringValue() + "\n");
+//					System.out.print("节点名: " + componentChild.getName() +
+//							"   节点值: " + componentChild.getStringValue() + "\n");
 					tempElement.put("class", componentChild.getName());
 					
 					List<Attribute> componentChildAttrs = componentChild.attributes();
 					
 					for (Attribute attr : componentChildAttrs) {
-						System.out.print("属性名: " + attr.getName() + "   属性值: "
-								+ attr.getValue() + "\n");
+//						System.out.print("属性名: " + attr.getName() + "   属性值: "
+//								+ attr.getValue() + "\n");
 						
 						tempElement.put(attr.getName(), attr.getValue());
 					}
@@ -62,7 +62,7 @@ public class XMLParseUtil {
 				
 			}
 			
-			System.out.print("*******************************\n");
+//			System.out.print("*******************************\n");
 			
 			//System.out.print(xmlContent);
 			

@@ -21,7 +21,7 @@ public class RuleVerification {
             }
         }
         else{
-            for (Class item : getClasssFromPackage("ruleEntity"+type)) {
+            for (Class item : getClasssFromPackage("ruleEntity."+type)) {
                 Method method = item.getDeclaredMethod("excute");
                 System.out.println(item);
                 method.invoke(null);
@@ -30,11 +30,11 @@ public class RuleVerification {
     }
 
     public static void main(String[] args)throws NoSuchMethodException, IllegalAccessException, InvocationTargetException{
-        //RuleVerification.verify("all");
+        RuleVerification.verify("safety");
         
-        String inputPath = "FlightSystem.xml";
-        XMLParseUtil mXMLParseUtil = new XMLParseUtil();
-        mXMLParseUtil.parseXML(inputPath);
+//        String inputPath = "FlightSystem.xml";
+//        XMLParseUtil mXMLParseUtil = new XMLParseUtil();
+//        mXMLParseUtil.parseXML(inputPath);
         //System.out.print(mXMLParseUtil.parseXML(inputPath));
         
     }
