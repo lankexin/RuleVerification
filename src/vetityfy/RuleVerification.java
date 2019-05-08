@@ -30,7 +30,7 @@ public class RuleVerification {
     }
 
     public static void main(String[] args)throws NoSuchMethodException, IllegalAccessException, InvocationTargetException{
-        RuleVerification.verify("safety");
+        RuleVerification.verify("all");
         
 //        String inputPath = "FlightSystem.xml";
 //        XMLParseUtil mXMLParseUtil = new XMLParseUtil();

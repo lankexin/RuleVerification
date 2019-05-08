@@ -6,7 +6,7 @@
     <message type="int" name="a" period="10" />
 
     <component stage="requirement" name="b" type="software" safetyLevel="a" />
-    <component stage="design" name="b" type="software" safetyLevel="a" communication="c" link="source"/>
+    <component stage="design" name="b" type="hardware" safetyLevel="a" communication="c" link="source"/>
 
     <component stage="design" name="d" type="software" safetyLevel="c" communication="c" link="dest"/>
 

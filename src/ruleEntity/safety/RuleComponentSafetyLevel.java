@@ -13,7 +13,6 @@ public class RuleComponentSafetyLevel {
         List<HashMap<String,String>> list=new ArrayList<>();
         list=XMLParseUtil.parseXML("FlightSystem.xml");
         List<HashMap<String,String>> listNew=new ArrayList<>();
-        listNew=list;
         for(HashMap<String,String> hash:list){
             String tmpClass=hash.get("class");
             if(tmpClass.equals("component")){

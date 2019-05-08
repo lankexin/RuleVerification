@@ -26,7 +26,7 @@ public class XMLParseUtil {
 			Iterator it = root.elementIterator();
 			
 			while (it.hasNext()) {
-				System.out.print("*****************************\n");
+//				System.out.print("*****************************\n");
 				Element component = (Element)it.next();
 				
 				List<Attribute> componentAttrs = component.attributes();
