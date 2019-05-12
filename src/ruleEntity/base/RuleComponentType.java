@@ -2,7 +2,6 @@ package ruleEntity.base;
 
 import ruleEntity.safety.RuleComponentSafetyLevel;
 import utils.XMLParseUtil;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +27,7 @@ public class RuleComponentType {
                     if (componentName.equals(hashNew.get("name")) && (!hashNew.get("class").equals("checkedComponent"))) {
                         if (!safetyLevel.equals(hashNew.get("type"))) {
                             System.out.println("组件" + componentName + "需求和设计间的组件类型不一致");
-                            System.out.print(hashNew);
+//                            System.out.print(hashNew);
                         }
                     }
                 }

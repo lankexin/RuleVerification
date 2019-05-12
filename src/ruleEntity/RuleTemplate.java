@@ -21,6 +21,6 @@ public class RuleTemplate {
     }
 
     public static void excute(){
-        System.out.println("haha");
+        System.out.println("-----");
     }
 }

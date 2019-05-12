@@ -12,7 +12,6 @@ public class RuleComponentSafetyLevel {
     public static void excute() {
         List<HashMap<String,String>> list=new ArrayList<>();
         list=XMLParseUtil.parseXML("FlightSystem.xml");
-        List<HashMap<String,String>> listNew=new ArrayList<>();
         for(HashMap<String,String> hash:list){
             String tmpClass=hash.get("class");
             if(tmpClass.equals("component")){
@@ -27,7 +26,7 @@ public class RuleComponentSafetyLevel {
                    if(componentName.equals(hashNew.get("name"))&&(!hashNew.get("class").equals("checkedComponent"))) {
                         if(!safetyLevel.equals(hashNew.get("safetyLevel"))){
                             System.out.println("组件"+componentName+"需求和设计间的安全级别不一致");
-                            System.out.print(hashNew);
+//                            System.out.print(hashNew);
                         }
                     }
                 }
