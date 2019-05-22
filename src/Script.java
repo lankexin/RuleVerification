@@ -7,9 +7,11 @@ import java.util.Scanner;
 public class Script {
     public static void Script() throws NoSuchMethodException, IllegalAccessException,InvocationTargetException{
         List<String> typeList = new ArrayList<>();
+        typeList.add("all");
         typeList.add("base");
         typeList.add("safety");
         typeList.add("realTime");
+
 
         while (true) {
             Scanner sc = new Scanner(System.in);
