@@ -10,6 +10,8 @@ public class Component {
 
     }
     public Map<String, HashMap<String,String>> getComponentInfo(){
+    	
+    	return null;
 
     }
 
