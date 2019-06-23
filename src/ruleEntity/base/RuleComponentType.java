@@ -12,7 +12,7 @@ public class RuleComponentType {
 
     public static void excute() {
         List<HashMap<String, String>> list = new ArrayList<>();
-        list = XMLParseUtil.parseXML("FlightSystem.xml");
+        //list = XMLParseUtil.parseXML("FlightSystem.xml");
         for (HashMap<String, String> hash : list) {
             String tmpClass = hash.get("class");
             if (tmpClass.equals("component")) {

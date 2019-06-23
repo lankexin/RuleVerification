@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ownedPublicSection name="simulink.xml">
+	<component id="-114101124" name="Temperature Sensor" type="rtos" wcet="0.1ms">
+		<linkpoint direction="in" id="116216325" name="Heat1"/>
+		<linkpoint direction="out" id="1016220108" name="Current_Temperature" period="3ms"/>
+	</component>
+	<component id="291216111" name="Operator Interface" type="rtos" wcet="1ms">
+		<linkpoint direction="in" id="-1630156293" name="Inter_Act_Input"/>
+		<linkpoint direction="out" id="1408769274" name="Operator_Settings"/>
+		<linkpoint direction="in" id="1937157303" name="Operator_Feedback"/>
+	</component>
+	<component id="453762388" name="Thermostat" type="rtos" wcet="1ms">
+		<linkpoint direction="in" id="-1045283895" name="Operator_Settings"/>
+		<linkpoint direction="in" id="1049282009" name="Current_Temperature" period="3ms"/>
+		<linkpoint direction="out" id="1607972813" name="Operator_Feedback"/>
+		<linkpoint direction="out" id="1759844637" name="Heat_Control"/>
+
+		<state id="23456" name="idle" wcet="4ms"/>
+
+		<state id="12345" name="Data_process" wcet="3ms">
+			<state id="-878922424" name="DataValidate" wcet="0.5ms"/>
+			<state id="1994780096" name="Fault_invalid Data" wcet="1ms" faultState="true" faultType="Invalid data" exit="report fault message"/>
+		</state>
+
+		<transition id="116627" source="23456" dest="12345" event="receive current temperature"/>
+			
+		<transition id="1166279956" source="878922424" dest="1994780096" event="data is invalid"/>
+
+	</component>
+	<component id="742744536" name="Alarm" type="rtos" wcet="1ms">
+		<linkpoint direction="out" id="1799107237" name="Send_Out_Alarm"/>
+		<linkpoint direction="in" id="1875280146" name="Current_Temperature" period="3ms"/>
+	</component>
+	<component id="897069661" name="Heat Source" type="rtos">
+		<linkpoint direction="in" id="-1501360097" name="Heat_Control"/>
+		<linkpoint direction="out" id="1836496497" name="Heat"/>
+	</component>
+	<component id="1076036315" name="Air" type="rtos">
+		<linkpoint direction="in" id="591641350" name="Heat"/>
+		<linkpoint direction="out" id="1292188921" name="Heat2"/>
+	</component>
+	<communicationchannel dest="1607972813" id="-1928716405" name="linkinslk" source="1607972813" type="sync"/>
+	<communicationchannel dest="1607972813" id="-1680605801" name="linkinslk" source="" type="sync"/>
+	<communicationchannel dest="1836496497" id="-1502734867" name="linkinslk" source="18364175984463796497" type="sync"/>
+	<communicationchannel dest="1408769274" id="-658464094" name="linkinslk" source="1408769274" type="sync"/>
+	<communicationchannel dest="1292188921" id="85722291" name="linkinslk" source="1292188921" type="sync"/>
+	<communicationchannel dest="1016220108" id="971719601" name="linkinslk" source="1016220108" type="sync"/>
+	<communicationchannel dest="1016220108" id="1202998512" name="linkinslk" source="1016220108" type="sync"/>
+</ownedPublicSection>
