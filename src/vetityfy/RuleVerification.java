@@ -3,8 +3,6 @@ package vetityfy;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import utils.XMLParseUtil;
-
 import static utils.PackageUtil.getClasssFromPackage;
 
 public class RuleVerification {
