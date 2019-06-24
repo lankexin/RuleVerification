@@ -185,6 +185,7 @@ public class XMLParseUtil {
 			for (Attribute attr : componentAttrs) {
 				newState.setAttr(attr.getName(), attr.getValue());
 				System.out.println(attr.getName() + " " + attr.getValue());
+				System.out.println("-------"+newState.getAttr("faultType"));
 			}
 			if (root.getParent().getName().equals("component"))  {
 				componentId = root.getParent().attribute("id").getValue();
@@ -225,7 +226,7 @@ public class XMLParseUtil {
 				(newException).setAttr(attr.getName(), attr.getValue());
 			}
 			componentList.get(componentId).getExceptionList()
-					.put(newException.getAttr("id"), newException);
+					.put(newException.getAttr("name"), newException);
 		}
 		
 		Iterator itt = component.elementIterator();
