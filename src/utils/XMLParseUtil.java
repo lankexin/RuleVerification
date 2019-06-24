@@ -9,9 +9,14 @@ import java.util.Map;
 import org.dom4j.*;
 import org.dom4j.io.SAXReader;
 
+import com.sun.xml.internal.bind.v2.TODO;
+
 import entity.Channel;
 import entity.Component;
+import entity.ErrorPropagations;
+import entity.ExceptionXML;
 import entity.Linkpoint;
+import entity.Propagation;
 import entity.State;
 import entity.Transition;
 
@@ -84,7 +89,27 @@ public class XMLParseUtil {
 		Map<String, Component> componentListSimulink = new HashMap<>();
 		Map<String, Channel> channelListSimulink = new HashMap<>();
 		
+		Map<String, Component> componentListAadl = new HashMap<>();
+		Map<String, Channel> channelListAadl = new HashMap<>();
+		
+		Map<String, Component> componentListSysml = new HashMap<>();
+		Map<String, Channel> channelListSysml = new HashMap<>();
+		
 		parseXML("simulink(2).xml", componentListSimulink, channelListSimulink);
+		parseXML("aadl(1).xml", componentListAadl, channelListAadl);
+		parseXML("sysml(1).xml", componentListSysml, channelListSysml);
+		
+//		System.out.println("\n存储的结果为：");
+//		for (String componentKey : componentListSimulink.keySet()) {
+//			System.out.println("\n" + componentKey);
+//			componentListSimulink.get(componentKey).attrsToString();
+//			for (String stateKey : componentListSimulink.get(componentKey).getStateList().keySet()) {
+//				System.out.println(stateKey);
+//				componentListSimulink.get(componentKey).getStateList().get(stateKey).attrsToString();
+//				System.out.println(componentListSimulink.get(componentKey).getStateList().get(stateKey)
+//						.getAttr("faultType") + "\n");
+//			}
+//		}
 	}
 	
 	public static void parseXML(String inputPath,
@@ -123,6 +148,13 @@ public class XMLParseUtil {
 				newComponent.setAttr(attr.getName(), attr.getValue());
 			}
 			componentList.put(newComponent.getAttr("id"), newComponent);
+		} else if (component.getName().equals("system")) {
+			Component newSystem = new Component();
+			newSystem.setAttr("type", "system");
+			for (Attribute attr : componentAttrs) {
+				newSystem.setAttr(attr.getName(), attr.getValue());
+			}
+			componentList.put(newSystem.getAttr("id"), newSystem);
 		} else if (component.getName().equals("communicationchannel")) {
 			Channel newChannel = new Channel();
 			for (Attribute attr : componentAttrs) {
@@ -144,14 +176,15 @@ public class XMLParseUtil {
 			}
 			componentList.get(componentId).getTransitionList().add(newTransition);
 		} else if (component.getName().equals("state")) {
+			//System.out.println(component.attribute("id"));
 			String componentId;
 			State newState = new State();
 			for (Attribute attr : componentAttrs) {
 				newState.setAttr(attr.getName(), attr.getValue());
+				//System.out.println(attr.getName() + " " + attr.getValue());
 			}
 			if (root.getParent().getName().equals("component"))  {
 				componentId = root.getParent().attribute("id").getValue();
-				componentList.get(componentId).getStateList().put(newState.getAttr("id"), newState);
 			}
 			else {
 				componentId = root.getParent().getParent().attribute("id").getValue();
@@ -159,6 +192,37 @@ public class XMLParseUtil {
 				State parentState = componentList.get(componentId).getStateList().get(stateId);
 				parentState.getSubStateList().add(newState);
 			}
+			componentList.get(componentId).getStateList().put(newState.getAttr("id"), newState);
+		} /*else if (component.getName().equals("error_propagations")) {
+			String componentId = root.getParent().attribute("id").getValue();
+			ErrorPropagations newErrorPropagations = new ErrorPropagations();
+			for (Attribute attr : componentAttrs) {
+				newErrorPropagations.setAttr(attr.getName(), attr.getValue());
+			}
+			componentList.get(componentId).getErrorPropagationList()
+						.put(newErrorPropagations.getAttr("id"), newErrorPropagations);
+		}*/ else if (component.getName().equals("propagation")) {
+			String componentId;
+			Propagation newPropagation = new Propagation();
+			for (Attribute attr : componentAttrs) {
+				System.out.print("属性名: " + attr.getName() + "   属性值: "
+						+ attr.getValue() + "\n");
+				newPropagation.setAttr(attr.getName(), attr.getValue());
+				//System.out.println(attr.getName() + " " + attr.getValue());
+			}
+			componentId = root.getParent().getParent().attribute("id").getValue();
+			componentList.get(componentId).getPropagationList()
+						.put(newPropagation.getAttr("id"), newPropagation);
+		} else if (component.getName().equals("exception")) {
+			String componentId = root.getParent().attribute("id").getValue();
+			ExceptionXML newException = new ExceptionXML();
+			for (Attribute attr : componentAttrs) {
+				System.out.print("属性名: " + attr.getName() + "   属性值: "
+						+ attr.getValue() + "\n");
+				(newException).setAttr(attr.getName(), attr.getValue());
+			}
+			componentList.get(componentId).getExceptionList()
+					.put(newException.getAttr("id"), newException);
 		}
 		
 		Iterator itt = component.elementIterator();
@@ -170,9 +234,7 @@ public class XMLParseUtil {
 			getXML(componentChild, componentList, channelList);
 		}
 			
-		System.out.print("00000000000000000000");
+		System.out.print("00000000000000000000\n");
 	}
-	
-	
 	
 }

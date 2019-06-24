@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ownedPublicSection name="aadl.xml">
+    <system name="isolette" wcet="15ms"/>
+    <component id="-1148400493" name="temperature_sensor" type="device" wcet="1ms">
+        <error_propagations>
+            <propagation direction="out" id="-2092512532" port_id="currentTemperature"/>
+        </error_propagations>
+    </component>
+    <component id="-1099650349" name="thermostat" type="rtos" wcet="3ms">
+        <linkpoint direction="out" id="-2092512532" name="operatorFeedback" period="3ms"/>
+        <linkpoint direction="out" id="-624619712" name="heating" period="3ms"/>
+        <linkpoint direction="in" id="916760749" name="operatorsettings" period="3ms"/>
+        <linkpoint direction="in" id="1471906835" name="currentTemperature" period="3ms"/>
+        
+        <transition id="1166279954">
+            <triggerevent id="-1892612874" name="Failure"/>
+            <sourcestate id="-878922424" name="Operational"/>
+            <deststate id="1994780096" name="FailStop"/>
+        </transition>
+        <transition id="1166279956">
+            <triggerevent id="-1892612874" name="Recoverevent"/>
+            <sourcestate id="-878922424" name="FailStop"/>
+            <deststate id="1994780096" name="Operational"/>
+        </transition>
+        <partition id="-1967467565">
+            <task Name="temadjust" deadline="1ms" id="-1539813967" wcet="1ms">
+                <port direction="in" id="-2114162597" name="setting"/>
+                <port direction="out" id="-1773284890" name="heating"/>
+                <port direction="in" id="63590628" name="ct"/>
+            </task>
+        </partition>
+        <partition id="-1766581564">
+            <task Name="datadeal" deadline="1ms" id="1276859385" wcet="2ms">
+                <port direction="in" id="181700764" name="datain"/>
+                <port direction="out" id="242442274" name="dataout"/>
+                <task Name="format.impl" id="-1971433923">
+                    <port direction="out" id="-534779833" name="dataout"/>
+                    <port direction="in" id="-9785291" name="datain"/>
+                </task>
+                <task Name="verify.impl" id="-185189494">
+                    <port direction="in" id="418479570" name="datain"/>
+                    <port direction="out" id="1626062586" name="dataout"/>
+                </task>
+            </task>
+        </partition>
+        <partition id="696993143">
+            <task Name="feedback" deadline="1ms" id="-28510314" wcet="1ms">
+                <port direction="in" id="-686996582" name="setting"/>
+                <port direction="out" id="907063037" name="feedback"/>
+            </task>
+        </partition>
+    </component>
+    <component id="-950756146" name="operatorinterface" type="rtos" wcet="2ms">
+        <linkpoint direction="in" id="-1087203902" name="inoperatorFeedback" period="3ms"/>
+        <linkpoint direction="in" id="42193815" name="inoperatorsettings" period="3ms"/>
+        <linkpoint direction="out" id="1008015587" name="outoperatorsettings" period="3ms"/>
+        <linkpoint direction="out" id="1099664606" name="outoperatorFeedback" period="3ms"/>
+    </component>
+    <component id="1836003291" name="alarm" type="rtos" wcet="4ms"/>
+    <component id="1996373471" name="heatsource" type="device">
+        <linkpoint direction="in" id="-192404855" name="heatcontrol"/>
+        <linkpoint direction="out" id="1142597925" name="heat"/>
+    </component>
+    <communicationchannel dest="1471906835" id="-1999989135" name="new_connection3" source="620203351" type="sync"/>
+    <communicationchannel dest="-192404855" id="-833805346" name="new_connection" source="-624619712" type="sync"/>
+    <communicationchannel dest="916760749" id="83240939" name="new_connection2" source="1008015587" type="sync"/>
+    <communicationchannel dest="-1087203902" id="300323718" name="new_connection4" source="-2092512532" type="sync"/>
+    <communicationchannel dest="-1123552799" id="865478188" name="ct4a" source="620203351" type="sync"/>
+</ownedPublicSection>
