@@ -80,13 +80,6 @@ public class XMLParseUtil {
 //		return null;
 //	}
 	
-	public static void main(String[] args) {
-		Map<String, Component> componentListSimulink = new HashMap<>();
-		Map<String, Channel> channelListSimulink = new HashMap<>();
-		
-		parseXML("simulink(2).xml", componentListSimulink, channelListSimulink);
-	}
-	
 	public static void parseXML(String inputPath,
 			Map<String, Component> componentList,
 			Map<String, Channel> channelList) {
@@ -111,15 +104,15 @@ public class XMLParseUtil {
 			Map<String, Channel> channelList) {
 		Iterator it = root.elementIterator();
 
-		System.out.print("*****************************\n");
+//		System.out.print("*****************************\n");
 		Element component = root;
 		List<Attribute> componentAttrs = component.attributes();
-		System.out.print("节点名" + component.getName() + "\n");
+//		System.out.print("节点名" + component.getName() + "\n");
 		if (component.getName().equals("component")) {
 			Component newComponent = new Component();
 			for (Attribute attr : componentAttrs) {
-				System.out.print("属性名: " + attr.getName() + "   属性值: "
-						+ attr.getValue() + "\n");
+//				System.out.print("属性名: " + attr.getName() + "   属性值: "
+//						+ attr.getValue() + "\n");
 				newComponent.setAttr(attr.getName(), attr.getValue());
 			}
 			componentList.put(newComponent.getAttr("id"), newComponent);
@@ -136,6 +129,14 @@ public class XMLParseUtil {
 				newLinkpoint.setAttr(attr.getName(), attr.getValue());
 			}
 			componentList.get(componentId).getLinkpointList().add(newLinkpoint);
+		} else if (component.getName().equals("exception")) {
+			String componentId = root.getParent().attribute("id").getValue();
+			System.out.println("----"+componentId);
+//			Exception exception = new Exception();
+//			for (Attribute attr : componentAttrs) {
+//				exception.setAttr(attr.getName());
+//			}
+//			componentList.get(componentId).getExceptionList().add(exception);
 		} else if (component.getName().equals("transition")) {
 			String componentId = root.getParent().attribute("id").getValue();
 			Transition newTransition = new Transition();
@@ -164,13 +165,20 @@ public class XMLParseUtil {
 		Iterator itt = component.elementIterator();
 		
 		while (itt.hasNext()) {
-			System.out.print("--------------------");
+//			System.out.print("--------------------");
 			Element componentChild = (Element) itt.next();
-			System.out.print(componentChild.getName() + "  " + component.attributes());
+//			System.out.print(componentChild.getName() + "  " + component.attributes());
 			getXML(componentChild, componentList, channelList);
 		}
 			
-		System.out.print("00000000000000000000");
+//		System.out.print("00000000000000000000");
+	}
+
+	public static void main(String[] args) {
+		Map<String, Component> componentListSimulink = new HashMap<>();
+		Map<String, Channel> channelListSimulink = new HashMap<>();
+
+		parseXML("simulink(2).xml", componentListSimulink, channelListSimulink);
 	}
 	
 	

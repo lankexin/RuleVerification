@@ -13,12 +13,14 @@ public class Component {
     Map<String, State> stateList;
     List<Linkpoint> linkpointList;
     List<Transition> transitionList;
+    List<String> exceptionList;
     
     public Component() {
     	attrs = new HashMap<>();
     	stateList = new HashMap<>();
     	linkpointList = new ArrayList<>();
     	transitionList = new ArrayList<>();
+    	exceptionList=new ArrayList<>();
     }
 
 
@@ -46,21 +48,7 @@ public class Component {
     	return attrs.get(key);
     }
 
-//    public List<Linkpoint> getInputLink() {
-//        return inputLink;
-//    }
-//
-//    public void setInputLink(List<Linkpoint> inputLink) {
-//        this.inputLink = inputLink;
-//    }
-//
-//    public List<Linkpoint> getOutputLink() {
-//        return outputLink;
-//    }
-//
-//    public void setOutputLink(List<Linkpoint> outputLink) {
-//        this.outputLink = outputLink;
-//    }
+
 
     public Map<String, State> getStateList() {
         return stateList;
@@ -78,10 +66,8 @@ public class Component {
     	return linkpointList;
     }
 
-    //    public void setComponentInfo(){
-        //componentInfo.put();
-//    }
-//    public Map<String, HashMap<String,String>> getComponentInfo(String name){
-//        return componentInfo;
-//    }
+    public List<String> getExceptionList() {
+        return exceptionList;
+    }
+
 }
