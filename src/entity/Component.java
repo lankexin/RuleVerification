@@ -11,16 +11,20 @@ public class Component {
     private Map<String, String> attrs;
 
     Map<String, State> stateList;
+    Map<String, Component> componentList;
+    Map<String, Propagation> propagationList;
+    Map<String, ExceptionXML> exceptionList;
     List<Linkpoint> linkpointList;
     List<Transition> transitionList;
-    List<String> exceptionList;
-    
+
     public Component() {
     	attrs = new HashMap<>();
     	stateList = new HashMap<>();
     	linkpointList = new ArrayList<>();
     	transitionList = new ArrayList<>();
-    	exceptionList=new ArrayList<>();
+
+    	exceptionList = new HashMap<String, ExceptionXML>();
+    	propagationList = new HashMap<String, Propagation>();
     }
 
 
@@ -53,6 +57,14 @@ public class Component {
     public Map<String, State> getStateList() {
         return stateList;
     }
+    
+    public Map<String, ExceptionXML> getExceptionList() {
+        return exceptionList;
+    }
+    
+    public Map<String, Propagation> getPropagationList() {
+		return propagationList;
+	}
 
     public void setStateList(Map<String, State> stateList) {
         this.stateList = stateList;
@@ -66,8 +78,21 @@ public class Component {
     	return linkpointList;
     }
 
-    public List<String> getExceptionList() {
-        return exceptionList;
+
+
+
+
+    //    public void setComponentInfo(){
+        //componentInfo.put();
+//    }
+//    public Map<String, HashMap<String,String>> getComponentInfo(String name){
+//        return componentInfo;
+//    }
+    
+    public void attrsToString() {
+    	for (String attrKey : attrs.keySet()) {
+    		System.out.println(attrKey + " " + attrs.get(attrKey));
+    	}
     }
 
 }

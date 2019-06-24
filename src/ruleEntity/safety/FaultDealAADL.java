@@ -41,9 +41,8 @@ public class FaultDealAADL {
                     String sourceState = transition.getAttr("source");
                     String destState = transition.getAttr("dest");
                     System.out.println(stateList.get(destState));
-                    if (attrsList().contains("faultState") &&
-                            "true".equals(stateList.get(destState).getAttr("faultState")))
-                        if (attrsList().contains("exit") && "report fault message".equals(stateList.get(destState).getAttr("exit"))) {
+                    if ("true".equals(stateList.get(destState).getAttr("faultState")))
+                        if ("report fault message".equals(stateList.get(destState).getAttr("exit"))) {
                             System.out.println("component:" + componentName + "记录故障信息处理故障:" +
                                     stateList.get(destState).getAttr("name"));
                         }

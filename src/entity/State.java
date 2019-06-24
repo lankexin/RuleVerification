@@ -33,4 +33,10 @@ public class State {
     public List<State> getSubStateList() {
     	return subStateList;
     }
+    
+    public void attrsToString() {
+    	for (String attrKey : attrs.keySet()) {
+    		System.out.println(attrKey + " " + attrs.get(attrKey));
+    	}
+    }
 }

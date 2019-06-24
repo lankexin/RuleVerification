@@ -21,6 +21,7 @@ public class FaultType {
         Map<String, Channel> channelListSimulink = new LinkedHashMap<>();
 
         parseXML("simulink(2).xml", componentListSimulink, channelListSimulink);
+        System.out.println(componentListSimulink.get("453762388").getStateList().get("23456").getAttr("faultType"));
 
         Set<String> componentSet = componentListSimulink.keySet();
         Iterator<String> iter = componentSet.iterator();
