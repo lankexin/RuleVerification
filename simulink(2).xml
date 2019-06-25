@@ -18,6 +18,7 @@
 		<state id="23456" name="idle" wcet="4ms"/>
 
 		<state id="12345" name="Data_process" wcet="3ms">
+			<state id="-878922423" name="idle" wcet="0.5ms"/>
 			<state id="-878922424" name="DataValidate" wcet="0.5ms"/>
 			<state id="1994780096" name="Fault_invalid Data" wcet="1ms" faultState="true" faultType="Invalid data" exit="report fault message"/>
 		</state>
@@ -25,7 +26,7 @@
 		<transition id="116627" source="23456" dest="12345" event="receive current temperature"/>
 			
 		<transition id="1166279956" source="878922424" dest="1994780096" event="data is invalid"/>
-
+		<transition id="1166279952" source="1994780096" dest="-878922423" event=""/>
 	</component>
 	<component id="742744536" name="Alarm" type="rtos" wcet="1ms">
 		<linkpoint direction="out" id="1799107237" name="Send_Out_Alarm"/>

@@ -6,21 +6,18 @@ import entity.State;
 import entity.Transition;
 
 import java.util.*;
-
-//import static entity.State.attrsList;
 import static utils.XMLParseUtil.parseXML;
 
 public class FaultDealAADL {
-    public static void excute(){
-        Map<String, Component> componentListSimulink = new HashMap<>();
+    public static void excute() {
+        Map<String, Component> componentListAADL = new HashMap<>();
         List<String> componentList = new ArrayList<>();
 
-        Map<String, Channel> channelListSimulink = new HashMap<>();
+        Map<String, Channel> channelListAADL = new HashMap<>();
 
-        parseXML("simulink(2).xml", componentListSimulink, channelListSimulink);
+        parseXML("aadl(1).xml", componentListAADL, channelListAADL);
 
-
-        Set<String> componentSet = componentListSimulink.keySet();
+        Set<String> componentSet = componentListAADL.keySet();
         Iterator<String> iter = componentSet.iterator();
         while (iter.hasNext()) {
             String str = iter.next();
@@ -29,28 +26,40 @@ public class FaultDealAADL {
         System.out.println(componentList);
 
         for (String componentId : componentList) {
-//            System.out.println(attrsList());
-            List<Transition> transitionList = componentListSimulink.get(componentId).getTransitionList();
-            Map<String, State> stateList = componentListSimulink.get(componentId).getStateList();
+            List<Transition> transitionList = componentListAADL.get(componentId).getTransitionList();
+            Map<String, State> stateList = componentListAADL.get(componentId).getStateList();
 
-            System.out.println("----" + stateList);
-
-            String componentName = componentListSimulink.get(componentId).getAttr("name");
+            String componentName = componentListAADL.get(componentId).getAttr("name");
             if (transitionList != null) {
                 for (Transition transition : transitionList) {
                     String sourceState = transition.getAttr("source");
                     String destState = transition.getAttr("dest");
-                    System.out.println(stateList.get(destState));
-                    if ("true".equals(stateList.get(destState).getAttr("faultState")))
-                        if ("report fault message".equals(stateList.get(destState).getAttr("exit"))) {
-                            System.out.println("component:" + componentName + "记录故障信息处理故障:" +
-                                    stateList.get(destState).getAttr("name"));
-                        }
+//                    System.out.println(stateList.get(destState));
+                    if (destState.equals("FailStop")) {
+                        String log = process(componentName, destState, transitionList);
+                        System.out.println(log);
+                    }
                 }
             }
         }
     }
-    public static void main(String[] args){
+
+    public static String process(String componentName, String faultState, List<Transition> transitionList) {
+        StringBuilder sb = new StringBuilder();
+        boolean flag = false;
+        for (Transition transition : transitionList) {
+            if (transition.getAttr("source").equals("FailStop") && transition.getAttr("dest")
+                                                                                     .equals("Operational")) {
+                sb.append("component:" + componentName + "发生故障FailStop" + "恢复为正常状态处理故障");
+                flag = true;
+            }
+        }
+        if (!flag)
+            sb.append("component:" + componentName + "发生故障FailStop" + ",故障未被处理");
+        return sb.toString();
+    }
+
+    public static void main(String[] args) {
         excute();
     }
 }

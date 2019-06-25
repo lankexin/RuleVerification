@@ -166,11 +166,6 @@ public class XMLParseUtil {
 		} else if (component.getName().equals("exception")) {
 			String componentId = root.getParent().attribute("id").getValue();
 			System.out.println("----"+componentId);
-//			Exception exception = new Exception();
-//			for (Attribute attr : componentAttrs) {
-//				exception.setAttr(attr.getName());
-//			}
-//			componentList.get(componentId).getExceptionList().add(exception);
 		} else if (component.getName().equals("transition")) {
 			String componentId = root.getParent().attribute("id").getValue();
 			Transition newTransition = new Transition();

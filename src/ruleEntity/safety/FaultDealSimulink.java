@@ -44,10 +44,9 @@ public class FaultDealSimulink {
         Map<String, Channel> channelListSimulink = new HashMap<>();
 
         parseXML("simulink(2).xml", componentListSimulink, channelListSimulink);
-
-        System.out.println(channelListSimulink);
-        System.out.println(componentListSimulink);
-        System.out.println(componentListSimulink.get("453762388").getStateList());
+//        System.out.println(channelListSimulink);
+//        System.out.println(componentListSimulink);
+//        System.out.println(componentListSimulink.get("453762388").getStateList());
         Set<String> componentSet = componentListSimulink.keySet();
         Iterator<String> iter = componentSet.iterator();
         while (iter.hasNext()) {
@@ -57,27 +56,58 @@ public class FaultDealSimulink {
         System.out.println(componentList);
 
         for (String componentId : componentList) {
-//            System.out.println(attrsList());
             List<Transition> transitionList = componentListSimulink.get(componentId).getTransitionList();
             Map<String, State> stateList = componentListSimulink.get(componentId).getStateList();
-
-            System.out.println("----" + stateList);
+//            System.out.println("----" + stateList);
             String componentName = componentListSimulink.get(componentId).getAttr("name");
             if (transitionList != null) {
                 for (Transition transition : transitionList) {
                     String sourceState = transition.getAttr("source");
                     String destState = transition.getAttr("dest");
                     System.out.println(stateList.get(destState));
-//                    if (attrsList().contains("faultState") &&
-//                            "true".equals(stateList.get(destState).getAttr("faultState")))
-//                        if (attrsList().contains("exit") && "report fault message".equals(stateList.get(destState).getAttr("exit"))) {
-//                            System.out.println("component:" + componentName + "记录故障信息处理故障:" +
-//                                    stateList.get(destState).getAttr("name"));
-//                        }
+                    if (stateList.get(destState).getAttr("faultState") != null &&
+                            "true".equals(stateList.get(destState).getAttr("faultState"))) {
+                        String log=process(stateList,destState,componentName,transitionList);
+                        System.out.println(log);
+                    }
                 }
             }
         }
     }
+
+
+
+    public static String process(Map<String, State> stateList, String faultState, String componentName,
+                                                                     List<Transition> transitionList) {
+        StringBuilder sb = new StringBuilder();
+        boolean flag = false;
+        if (stateList.get(faultState).getAttr("exit") != null
+                && "report fault message".equals(stateList.get(faultState).getAttr("exit"))) {
+//                System.out.println("component:" + componentName + "记录故障信息处理故障:" +
+//                        stateList.get(destState).getAttr("name"));
+            sb = sb.append("component:" + componentName +"发生故障"+stateList.get(faultState).getAttr("name")+
+                                "通过记录故障信息处理故障." );
+            flag = true;
+        }
+        for (Transition transition : transitionList) {
+            String sourceState = transition.getAttr("source");
+            if (sourceState.equals(faultState)) {
+                String destMode = stateList.get(transition.getAttr("dest")).getAttr("faultState");
+                if (destMode == null) {
+                    sb.append("恢复为正常状态处理故障");
+                    flag = true;
+                }
+            }
+        }
+        if (!flag) {
+            sb.append("component:" + componentName + "发生的故障:" +
+                    stateList.get(faultState).getAttr("name")+"未处理");
+        }
+        return sb.toString();
+    }
+
+
+
     public static void main(String[] args) {
         excute();
     }

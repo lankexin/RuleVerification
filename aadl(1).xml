@@ -3,7 +3,7 @@
     <system name="isolette" wcet="15ms"/>
     <component id="-1148400493" name="temperature_sensor" type="device" wcet="1ms">
         <error_propagations>
-            <propagation direction="out" id="-2092512532" port_id="currentTemperature"/>
+            <propagation direction="out" id="-2092512532" port_id="currentTemperature" fault="InvalidParameter"/>
         </error_propagations>
     </component>
     <component id="-1099650349" name="thermostat" type="rtos" wcet="3ms">
@@ -11,17 +11,11 @@
         <linkpoint direction="out" id="-624619712" name="heating" period="3ms"/>
         <linkpoint direction="in" id="916760749" name="operatorsettings" period="3ms"/>
         <linkpoint direction="in" id="1471906835" name="currentTemperature" period="3ms"/>
-        
-        <transition id="1166279954">
-            <triggerevent id="-1892612874" name="Failure"/>
-            <sourcestate id="-878922424" name="Operational"/>
-            <deststate id="1994780096" name="FailStop"/>
-        </transition>
-        <transition id="1166279956">
-            <triggerevent id="-1892612874" name="Recoverevent"/>
-            <sourcestate id="-878922424" name="FailStop"/>
-            <deststate id="1994780096" name="Operational"/>
-        </transition>
+
+        <transition id="1166279954" source="Operational" dest="FailStop" event="Failure"/>
+
+        <transition id="1166279956" source="FailStop" dest="Operational" event="Recoverevent"/>
+
         <partition id="-1967467565">
             <task Name="temadjust" deadline="1ms" id="-1539813967" wcet="1ms">
                 <port direction="in" id="-2114162597" name="setting"/>
