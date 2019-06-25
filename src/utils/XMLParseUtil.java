@@ -26,64 +26,6 @@ public class XMLParseUtil {
 		
 	}
 	
-//	public static List<HashMap<String, String>> parseXML(String inputPath) {
-//		List<HashMap<String, String>> xmlContent = new ArrayList<>();
-//		
-//		SAXReader reader = new SAXReader();
-//		
-//		try {
-//			Document document = reader.read(inputPath);
-//			Element root = document.getRootElement();
-//			Iterator it = root.elementIterator();
-//			
-//			while (it.hasNext()) {
-////				System.out.print("*****************************\n");
-//				Element component = (Element)it.next();
-//				
-//				List<Attribute> componentAttrs = component.attributes();
-//				
-//				for (Attribute attr : componentAttrs) {
-////					System.out.print("属性名: " + attr.getName() + "   属性值: "
-////							+ attr.getValue() + "\n");
-//					
-//				}
-//				
-//				Iterator itt = component.elementIterator();
-//				
-//				while (itt.hasNext()) {
-//					HashMap<String, String> tempElement = new HashMap<>();
-//					Element componentChild = (Element) itt.next();
-//
-////					System.out.print("节点名: " + componentChild.getName() +
-////							"   节点值: " + componentChild.getStringValue() + "\n");
-//					tempElement.put("class", componentChild.getName());
-//					
-//					List<Attribute> componentChildAttrs = componentChild.attributes();
-//					
-//					for (Attribute attr : componentChildAttrs) {
-////						System.out.print("属性名: " + attr.getName() + "   属性值: "
-////								+ attr.getValue() + "\n");
-//						
-//						tempElement.put(attr.getName(), attr.getValue());
-//					}
-//					
-//					xmlContent.add(tempElement);
-//				}
-//				
-//				
-//			}
-//			
-////			System.out.print("*******************************\n");
-//			
-//			//System.out.print(xmlContent);
-//			
-//			return xmlContent;
-//		} catch (DocumentException e) {
-//			e.printStackTrace();
-//		}
-//		
-//		return null;
-//	}
 	public static void main(String[] args) {
 		Map<String, Component> componentListSimulink = new HashMap<>();
 		Map<String, Channel> channelListSimulink = new HashMap<>();
@@ -98,15 +40,36 @@ public class XMLParseUtil {
 		parseXML("aadl(1).xml", componentListAadl, channelListAadl);
 		parseXML("sysml(1).xml", componentListSysml, channelListSysml);
 		
-		System.out.println("\n存储的结果为：");
+		System.out.println("\nsimulink存储的结果为：");
 		for (String componentKey : componentListSimulink.keySet()) {
-			System.out.println("\n" + componentKey);
+			System.out.println("\nComponent id : " + componentKey);
 			componentListSimulink.get(componentKey).attrsToString();
 			for (String stateKey : componentListSimulink.get(componentKey).getStateList().keySet()) {
-				System.out.println(stateKey);
+				System.out.println("State id : " + stateKey);
 				componentListSimulink.get(componentKey).getStateList().get(stateKey).attrsToString();
 				System.out.println(componentListSimulink.get(componentKey).getStateList().get(stateKey)
 						.getAttr("faultType") + "\n");
+			}
+		}
+		
+		System.out.println("\nsysml存储的结果为：");
+		for (String componentKey : componentListSysml.keySet()) {
+			System.out.println("\nComponent id : " + componentKey);
+			componentListSysml.get(componentKey).attrsToString();
+
+			for (String exceptionKey : componentListSysml.get(componentKey).getExceptionList().keySet()) {
+				System.out.println("Exception id : " + exceptionKey);
+				componentListSysml.get(componentKey).getExceptionList().get(exceptionKey).attrsToString();
+			}
+		}
+		
+		System.out.println("\naadl存储的结果为：");
+		for (String componentKey : componentListAadl.keySet()) {
+			System.out.println("\nComponent id : " + componentKey);
+			componentListAadl.get(componentKey).attrsToString();
+			for (String propagationKey : componentListAadl.get(componentKey).getPropagationList().keySet()) {
+				System.out.println("Propagation id : " + propagationKey);
+				componentListAadl.get(componentKey).getPropagationList().get(propagationKey).attrsToString();
 			}
 		}
 	}
@@ -114,9 +77,6 @@ public class XMLParseUtil {
 	public static void parseXML(String inputPath,
 			Map<String, Component> componentList,
 			Map<String, Channel> channelList) {
-//		List<HashMap<String, String>> xmlContent = new ArrayList<>();
-//		Map<String, Map<String, Component>> component;
-//		Map<String, Map<String, CommunicationChannel>> communicationChannel;
 		SAXReader reader = new SAXReader();
 		try {
 			Document document = reader.read(inputPath);
@@ -131,15 +91,14 @@ public class XMLParseUtil {
 			Map<String, Component> componentList,
 			Map<String, Channel> channelList) {
 		Iterator it = root.elementIterator();
-//		System.out.print("*****************************\n");
 		Element component = root;
 		List<Attribute> componentAttrs = component.attributes();
-//		System.out.print("节点名" + component.getName() + "\n");
+
 		if (component.getName().equals("component")) {
 			Component newComponent = new Component();
 			for (Attribute attr : componentAttrs) {
-				System.out.print("属性名: " + attr.getName() + "   属性值: "
-						+ attr.getValue() + "\n");
+//				System.out.print("属性名: " + attr.getName() + "   属性值: "
+//						+ attr.getValue() + "\n");
 				newComponent.setAttr(attr.getName(), attr.getValue());
 			}
 			componentList.put(newComponent.getAttr("id"), newComponent);
@@ -149,7 +108,7 @@ public class XMLParseUtil {
 			for (Attribute attr : componentAttrs) {
 				newSystem.setAttr(attr.getName(), attr.getValue());
 			}
-			componentList.put(newSystem.getAttr("id"), newSystem);
+			componentList.put(newSystem.getAttr("type"), newSystem);
 		} else if (component.getName().equals("communicationchannel")) {
 			Channel newChannel = new Channel();
 			for (Attribute attr : componentAttrs) {
@@ -163,9 +122,6 @@ public class XMLParseUtil {
 				newLinkpoint.setAttr(attr.getName(), attr.getValue());
 			}
 			componentList.get(componentId).getLinkpointList().add(newLinkpoint);
-		} else if (component.getName().equals("exception")) {
-			String componentId = root.getParent().attribute("id").getValue();
-			System.out.println("----"+componentId);
 		} else if (component.getName().equals("transition")) {
 			String componentId = root.getParent().attribute("id").getValue();
 			Transition newTransition = new Transition();
@@ -179,8 +135,8 @@ public class XMLParseUtil {
 			State newState = new State();
 			for (Attribute attr : componentAttrs) {
 				newState.setAttr(attr.getName(), attr.getValue());
-				System.out.println(attr.getName() + " " + attr.getValue());
-				System.out.println("-------"+newState.getAttr("faultType"));
+//				System.out.println(attr.getName() + " " + attr.getValue());
+//				System.out.println("-------"+newState.getAttr("faultType"));
 			}
 			if (root.getParent().getName().equals("component"))  {
 				componentId = root.getParent().attribute("id").getValue();
@@ -204,8 +160,8 @@ public class XMLParseUtil {
 			String componentId;
 			Propagation newPropagation = new Propagation();
 			for (Attribute attr : componentAttrs) {
-				System.out.print("属性名: " + attr.getName() + "   属性值: "
-						+ attr.getValue() + "\n");
+//				System.out.print("属性名: " + attr.getName() + "   属性值: "
+//						+ attr.getValue() + "\n");
 				newPropagation.setAttr(attr.getName(), attr.getValue());
 				//System.out.println(attr.getName() + " " + attr.getValue());
 			}
@@ -216,8 +172,8 @@ public class XMLParseUtil {
 			String componentId = root.getParent().attribute("id").getValue();
 			ExceptionXML newException = new ExceptionXML();
 			for (Attribute attr : componentAttrs) {
-				System.out.print("属性名: " + attr.getName() + "   属性值: "
-						+ attr.getValue() + "\n");
+//				System.out.print("属性名: " + attr.getName() + "   属性值: "
+//						+ attr.getValue() + "\n");
 				(newException).setAttr(attr.getName(), attr.getValue());
 			}
 			componentList.get(componentId).getExceptionList()
@@ -227,15 +183,9 @@ public class XMLParseUtil {
 		Iterator itt = component.elementIterator();
 		
 		while (itt.hasNext()) {
-//			System.out.print("--------------------");
 			Element componentChild = (Element) itt.next();
-//			System.out.print(componentChild.getName() + "  " + component.attributes());
 			getXML(componentChild, componentList, channelList);
 		}
-			
-
 	}
-
-
 	
 }
