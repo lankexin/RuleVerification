@@ -7,7 +7,7 @@ import entity.Transition;
 
 import java.util.*;
 
-import static entity.State.attrsList;
+//import static entity.State.attrsList;
 import static utils.XMLParseUtil.parseXML;
 
 public class FaultDealAADL {
@@ -29,7 +29,7 @@ public class FaultDealAADL {
         System.out.println(componentList);
 
         for (String componentId : componentList) {
-            System.out.println(attrsList());
+//            System.out.println(attrsList());
             List<Transition> transitionList = componentListSimulink.get(componentId).getTransitionList();
             Map<String, State> stateList = componentListSimulink.get(componentId).getStateList();
 

@@ -7,7 +7,7 @@ import entity.Transition;
 
 import java.util.*;
 
-import static entity.State.attrsList;
+//import static entity.State.attrsList;
 import static utils.XMLParseUtil.parseXML;
 
 public class FaultType {

@@ -3,7 +3,7 @@ package entity;
 import java.util.*;
 
 public class State {
-    private static Map<String, String> attrs;
+    private Map<String, String> attrs;
     private List<State> subStateList;
 
     public State() {
@@ -19,17 +19,6 @@ public class State {
     	return attrs.get(key);
     }
 
-    public static List<String> attrsList(){
-        List<String> attrsList=new ArrayList<>();
-        Set<String> componentSet = attrs.keySet();
-        Iterator<String> iter = componentSet.iterator();
-        while (iter.hasNext()) {
-            String str = iter.next();
-            attrsList.add(str);
-        }
-        return attrsList;
-    }
-    
     public List<State> getSubStateList() {
     	return subStateList;
     }
