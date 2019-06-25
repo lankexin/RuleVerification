@@ -20,7 +20,8 @@
 		<state id="12345" name="Data_process" wcet="3ms">
 			<state id="-878922423" name="idle" wcet="0.5ms"/>
 			<state id="-878922424" name="DataValidate" wcet="0.5ms"/>
-			<state id="1994780096" name="Fault_invalid Data" wcet="1ms" faultState="true" faultType="Invalid data" exit="report fault message"/>
+			<state id="1994780096" name="Fault_invalid Data" wcet="1ms" faultState="true" faultType="Invalid data"
+				   exit="report fault message"/>
 		</state>
 
 		<transition id="116627" source="23456" dest="12345" event="receive current temperature"/>

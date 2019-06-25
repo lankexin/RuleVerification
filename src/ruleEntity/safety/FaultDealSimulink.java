@@ -53,7 +53,7 @@ public class FaultDealSimulink {
             String str = iter.next();
             componentList.add(str);
         }
-        System.out.println(componentList);
+//        System.out.println(componentList);
 
         for (String componentId : componentList) {
             List<Transition> transitionList = componentListSimulink.get(componentId).getTransitionList();
@@ -64,7 +64,7 @@ public class FaultDealSimulink {
                 for (Transition transition : transitionList) {
                     String sourceState = transition.getAttr("source");
                     String destState = transition.getAttr("dest");
-                    System.out.println(stateList.get(destState));
+//                    System.out.println(stateList.get(destState));
                     if (stateList.get(destState).getAttr("faultState") != null &&
                             "true".equals(stateList.get(destState).getAttr("faultState"))) {
                         String log=process(stateList,destState,componentName,transitionList);

@@ -23,7 +23,7 @@ public class FaultDealAADL {
             String str = iter.next();
             componentList.add(str);
         }
-        System.out.println(componentList);
+//        System.out.println(componentList);
 
         for (String componentId : componentList) {
             List<Transition> transitionList = componentListAADL.get(componentId).getTransitionList();
