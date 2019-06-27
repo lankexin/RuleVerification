@@ -38,7 +38,6 @@ public class RuleVerification {
             System.out.println("不存在当前规则");
         }
 
-
     }
 
     public static void main(String[] args)throws NoSuchMethodException, IllegalAccessException, InvocationTargetException{

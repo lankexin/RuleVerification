@@ -13,6 +13,7 @@ public class Component {
     List<Linkpoint> linkpointList;
     List<Transition> transitionList;
     List<Port> portList;
+    List<Connection> connectionList;
 
     public Component() {
     	attrs = new HashMap<>();
@@ -21,6 +22,7 @@ public class Component {
     	linkpointList = new ArrayList<>();
     	transitionList = new ArrayList<>();
     	portList = new ArrayList<Port>();
+    	connectionList = new ArrayList<Connection>();
 
     	exceptionList = new HashMap<String, ExceptionXML>();
     	propagationList = new HashMap<String, Propagation>();
@@ -64,6 +66,11 @@ public class Component {
     
     public List<Linkpoint> getLinkpointList() {
     	return linkpointList;
+    }
+    
+    
+    public List<Connection> getConnectionList() {
+    	return connectionList;
     }
 
 
