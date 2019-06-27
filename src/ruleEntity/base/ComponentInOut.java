@@ -21,9 +21,6 @@ public class ComponentInOut {
         XMLParseUtil.parseXML("simulink(2).xml", componentListSimulink,channelListSimulink);
         XMLParseUtil.parseXML("sysml(4).xml", componentListSysml, channelListSysml);
 
-        List<String> componentSimulinkList = new ArrayList<>();
-        componentSimulinkList = keySet(componentListSimulink);
-
         List<String> componentSysmlList = new ArrayList<>();
         componentSysmlList = keySet(componentListSysml);
 
@@ -59,7 +56,6 @@ public class ComponentInOut {
                     if(!linkpointNameList_simulink.contains(link))
                         System.out.println("Sysml模型中，组件"+componentName+"的端口"+link+"没有对应的子系统的端口");
                 }
-
             }
             else
                 System.out.println("Sysml模型中的组件"+componentName+"没有子系统的组件与之对应");

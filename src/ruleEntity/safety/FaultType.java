@@ -66,10 +66,12 @@ public class FaultType {
             String simulinkId=map.get("simulink").get("id");
             if(simulinkId.equals(componentIdSimulink)) {
                 String componentIDSysml = map.get("sysml").get("id");
-                Map<String, ExceptionXML> exceptions=componentListSysml.get(componentIDSysml).getExceptionList();
-                List<String> exceptionIdList=getExceptionIdList(exceptions);
-                for(String exceptionId:exceptionIdList){
-                    exceptionList.add(exceptions.get(exceptionId).getAttr("name"));
+                if(componentListSysml.get(componentIDSysml)!=null) {
+                    Map<String, ExceptionXML> exceptions = componentListSysml.get(componentIDSysml).getExceptionList();
+                    List<String> exceptionIdList = getExceptionIdList(exceptions);
+                    for (String exceptionId : exceptionIdList) {
+                        exceptionList.add(exceptions.get(exceptionId).getAttr("name"));
+                    }
                 }
             }
         }
@@ -116,7 +118,6 @@ public class FaultType {
         Map<String,String> idSimulink_1=new LinkedHashMap<>();
         idSimulink_1.put("id","453762388");
 
-
         Map<String,Map<String, String>> mapModel=new LinkedHashMap<>();
         mapModel.put("sysml",idSysml);
         mapModel.put("aadl",idAADL);
@@ -126,7 +127,6 @@ public class FaultType {
         mapModel1.put("sysml",idSysml_1);
         mapModel1.put("aadl",idAADL_1);
         mapModel1.put("simulink",idSimulink_1);
-
 
         list.add(mapModel);
         list.add(mapModel1);
@@ -138,6 +138,5 @@ public class FaultType {
     public static void main(String[] args){
 //        mapping();
         excute();
-//        sysmlTypes("453762388");
     }
 }
