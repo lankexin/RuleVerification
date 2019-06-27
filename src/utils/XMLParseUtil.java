@@ -14,6 +14,7 @@ import com.sun.xml.internal.ws.client.SenderException;
 
 import entity.Channel;
 import entity.Component;
+import entity.Connection;
 import entity.ErrorPropagations;
 import entity.ExceptionXML;
 import entity.Linkpoint;
@@ -125,6 +126,13 @@ public class XMLParseUtil {
 				newLinkpoint.setAttr(attr.getName(), attr.getValue());
 			}
 			componentList.get(componentId).getLinkpointList().add(newLinkpoint);
+		} else if (component.getName().equals("connection")) {
+			String componentId = root.getParent().attribute("id").getValue();
+			Connection newConnection = new Connection();
+			for (Attribute attr : componentAttrs) {
+				newConnection.setAttr(attr.getName(), attr.getValue());
+			}
+			componentList.get(componentId).getConnectionList().add(newConnection);
 		} else if (component.getName().equals("transition")) {
 			String componentId = root.getParent().attribute("id").getValue();
 			Transition newTransition = new Transition();
