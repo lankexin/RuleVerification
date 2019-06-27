@@ -89,6 +89,7 @@ public class XMLParseUtil {
 		}
 	}
 	
+	
 	private static void getXML(Element root,
 			Map<String, Component> componentList,
 			Map<String, Channel> channelList) {
