@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import vetityfy.RuleVerification;
+import verityfy.RuleVerification;
 
 
 public class Script {
