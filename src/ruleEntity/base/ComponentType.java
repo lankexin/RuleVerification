@@ -8,6 +8,9 @@ import static ruleEntity.safety.FaultType.mapping;
 import static utils.KeySet.keySet;
 
 public class ComponentType {
+    /**
+     * sysml的组件类型和simulink的组件类型一致
+     */
     public static void excute(){
         Map<String, Component> componentListSimulink = new LinkedHashMap<>();
         Map<String, Channel> channelListSimulink = new LinkedHashMap<>();

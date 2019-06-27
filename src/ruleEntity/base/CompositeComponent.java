@@ -8,6 +8,9 @@ import java.util.*;
 import static utils.KeySet.keySet;
 
 public class CompositeComponent {
+    /**
+     * 复合组件的端口和子组件端口的一致性对应
+     */
     public static void excute() {
         Map<String, Component> componentListAadl = new LinkedHashMap<>();
         Map<String, Channel> channelListAadl = new LinkedHashMap<>();
@@ -49,8 +52,8 @@ public class CompositeComponent {
                                 String portName = port.getAttr("name");
 //                                System.out.println("port" + portName);
                                 if (!linkpointNameList.contains(portName))
-                                    System.out.println("AADL模型中，组件" + componentName + "未包含其子组件" + taskName + "的端口" +
-                                            portName);
+                                    System.out.println("AADL模型中，组件" + componentName + "未包含其子组件"
+                                            + taskName + "的端口" + portName);
                             }
 
                         }

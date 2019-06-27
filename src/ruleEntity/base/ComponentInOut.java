@@ -11,6 +11,9 @@ import static ruleEntity.safety.FaultType.mapping;
 import static utils.KeySet.keySet;
 
 public class ComponentInOut {
+    /**
+     * 需求中某个组件的输入输出接口，一定与子系统设计模型中的某个输入输出接口对应
+     */
     public static void excute() {
         Map<String, Component> componentListSimulink = new LinkedHashMap<>();
         Map<String, Channel> channelListSimulink = new LinkedHashMap<>();

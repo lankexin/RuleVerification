@@ -1,12 +1,13 @@
 package ruleEntity.safety;
 
 import entity.*;
-
 import java.util.*;
-
 import static utils.XMLParseUtil.parseXML;
 
 public class PropagationDeal {
+    /**
+     * 故障传播的定义是否完整，是否被处理
+     */
     public static void excute() {
         StringBuilder sb=new StringBuilder();
         Map<String, Component> componentListAADL = new LinkedHashMap<>();
@@ -54,21 +55,16 @@ public class PropagationDeal {
                 }
             }
         }
-
     }
+
 
     public static List<String> getComponentIdList() {
         Map<String, Component> componentListAADL = new LinkedHashMap<>();
         List<String> componentList = new ArrayList<>();
-
         Map<String, Channel> channelListAADL = new LinkedHashMap<>();
-
         parseXML("aadl(1).xml", componentListAADL, channelListAADL);
-
         Set<String> componentSet = componentListAADL.keySet();
-
         Iterator<String> iter = componentSet.iterator();
-
         while (iter.hasNext()) {
             String str = iter.next();
             componentList.add(str);
@@ -81,22 +77,16 @@ public class PropagationDeal {
     public static List<String> getpropagationIdList(Map<String, Propagation> propagationList) {
         List<String> propagations = new ArrayList<>();
         Set<String> propagationSet = propagationList.keySet();
-
         Iterator<String> iter = propagationSet.iterator();
-
         while (iter.hasNext()) {
             String str = iter.next();
             propagations.add(str);
         }
 //        System.out.println(propagations);
-
         return propagations;
     }
 
-
     public static void main(String[] args) {
-//        getComponentIdList();
         excute();
     }
-
 }
