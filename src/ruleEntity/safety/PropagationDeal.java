@@ -17,10 +17,11 @@ public class PropagationDeal {
 
         Map<String, Channel> channelListAADL = new LinkedHashMap<>();
 
-        parseXML("aadl(1).xml", componentListAADL, channelListAADL);
+        parseXML("aadl(5).xml", componentListAADL, channelListAADL);
 
         for (String componentId : componentList) {
-            Map<String, Propagation> propagationList = componentListAADL.get(componentId).getPropagationList();
+            Map<String, Propagation> propagationList = componentListAADL.get(componentId)
+                    .getPropagationList();
             String componentName = componentListAADL.get(componentId).getAttr("name");
             List<String> propagationIds = getpropagationIdList(propagationList);
             for (String propagationId : propagationIds) {
@@ -62,7 +63,7 @@ public class PropagationDeal {
         Map<String, Component> componentListAADL = new LinkedHashMap<>();
         List<String> componentList = new ArrayList<>();
         Map<String, Channel> channelListAADL = new LinkedHashMap<>();
-        parseXML("aadl(1).xml", componentListAADL, channelListAADL);
+        parseXML("aadl(5).xml", componentListAADL, channelListAADL);
         Set<String> componentSet = componentListAADL.keySet();
         Iterator<String> iter = componentSet.iterator();
         while (iter.hasNext()) {

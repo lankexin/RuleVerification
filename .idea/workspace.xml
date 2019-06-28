@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cad9886e-65bb-4e9a-a190-8b0536a043b7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/aadl(5).xml" beforeDir="false" afterPath="$PROJECT_DIR$/aadl(5).xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ruleEntity/safety/FaultDealAADL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ruleEntity/safety/FaultDealAADL.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ruleEntity/safety/FaultDealSimulink.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ruleEntity/safety/FaultDealSimulink.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/verityfy/RuleVerification.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/verityfy/RuleVerification.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ruleEntity/safety/PropagationDeal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ruleEntity/safety/PropagationDeal.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -83,8 +80,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ruleEntity/safety/PropagationDeal.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="855">
-              <caret line="59" selection-start-line="59" selection-end-line="59" />
+            <state relative-caret-position="575">
+              <caret line="65" column="24" selection-start-line="65" selection-start-column="24" selection-end-line="65" selection-end-column="24" />
               <folding>
                 <element signature="e#4027#4028#0" expanded="true" />
                 <element signature="e#4051#4052#0" expanded="true" />
@@ -93,11 +90,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ruleEntity/safety/FaultDealAADL.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
+            <state relative-caret-position="817">
+              <caret line="48" column="47" lean-forward="true" selection-start-line="48" selection-start-column="47" selection-end-line="48" selection-end-column="47" />
             </state>
           </provider>
         </entry>
@@ -105,8 +102,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/aadl(5).xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="665">
-              <caret line="35" column="20" selection-start-line="35" selection-start-column="20" selection-end-line="35" selection-end-column="20" />
+            <state relative-caret-position="1368">
+              <caret line="72" column="9" selection-start-line="72" selection-start-column="9" selection-end-line="72" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/aadl(1).xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="228">
+              <caret line="12" column="60" lean-forward="true" selection-start-line="12" selection-start-column="60" selection-end-line="12" selection-end-column="60" />
             </state>
           </provider>
         </entry>
@@ -187,11 +193,11 @@
         <option value="$PROJECT_DIR$/src/ruleEntity/base/ComponentType.java" />
         <option value="$PROJECT_DIR$/src/ruleEntity/base/CompositeComponent.java" />
         <option value="$PROJECT_DIR$/src/ruleEntity/base/ComponentInOut.java" />
-        <option value="$PROJECT_DIR$/src/ruleEntity/safety/PropagationDeal.java" />
         <option value="$PROJECT_DIR$/src/verityfy/RuleVerification.java" />
         <option value="$PROJECT_DIR$/src/ruleEntity/safety/FaultDealSimulink.java" />
-        <option value="$PROJECT_DIR$/aadl(5).xml" />
         <option value="$PROJECT_DIR$/src/ruleEntity/safety/FaultDealAADL.java" />
+        <option value="$PROJECT_DIR$/src/ruleEntity/safety/PropagationDeal.java" />
+        <option value="$PROJECT_DIR$/aadl(5).xml" />
       </list>
     </option>
   </component>
@@ -280,7 +286,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1561725329539" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1561726047063" />
     <property name="last_opened_file_path" value="$USER_HOME$/Documents/WeChat Files/zrx00002222/FileStorage/File/2019-05/dom4j-2.1.1.jar!/" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -310,7 +316,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.FaultDealAADL">
+  <component name="RunManager" selected="Application.PropagationDeal">
     <configuration name="ComponentInOut" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ruleEntity.base.ComponentInOut" />
       <module name="RuleVeritify" />
@@ -378,10 +384,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.PropagationDeal" />
         <item itemvalue="Application.FaultDealAADL" />
         <item itemvalue="Application.RuleVerification" />
         <item itemvalue="Application.ComponentInOut" />
-        <item itemvalue="Application.PropagationDeal" />
         <item itemvalue="Application.ComponentType" />
       </list>
     </recent_temporary>
@@ -414,12 +420,12 @@
       <workItem from="1561381056311" duration="3283000" />
       <workItem from="1561427265806" duration="14694000" />
       <workItem from="1561617333644" duration="17750000" />
-      <workItem from="1561723179347" duration="2149000" />
+      <workItem from="1561723179347" duration="2674000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="111124000" />
+    <option name="totallyTimeSpent" value="111649000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -434,7 +440,7 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24061662" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24061662" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -443,14 +449,14 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.51699716" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.21388102" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.1388102" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.6161473" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3286119" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.5424929" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.14447592" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="11" weight="0.3286119" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.060906515" />
@@ -797,17 +803,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ruleEntity/safety/PropagationDeal.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="855">
-          <caret line="59" selection-start-line="59" selection-end-line="59" />
-          <folding>
-            <element signature="e#4027#4028#0" expanded="true" />
-            <element signature="e#4051#4052#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ruleEntity/safety/FaultDealSimulink.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="266">
@@ -819,24 +814,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/aadl(1).xml">
+    <entry file="file://$PROJECT_DIR$/src/ruleEntity/safety/FaultDealAADL.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="8" column="48" selection-start-line="8" selection-start-column="38" selection-end-line="8" selection-end-column="48" />
+        <state relative-caret-position="817">
+          <caret line="48" column="47" lean-forward="true" selection-start-line="48" selection-start-column="47" selection-end-line="48" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ruleEntity/safety/PropagationDeal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="575">
+          <caret line="65" column="24" selection-start-line="65" selection-start-column="24" selection-end-line="65" selection-end-column="24" />
+          <folding>
+            <element signature="e#4027#4028#0" expanded="true" />
+            <element signature="e#4051#4052#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/aadl(5).xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="665">
-          <caret line="35" column="20" selection-start-line="35" selection-start-column="20" selection-end-line="35" selection-end-column="20" />
+        <state relative-caret-position="1368">
+          <caret line="72" column="9" selection-start-line="72" selection-start-column="9" selection-end-line="72" selection-end-column="9" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ruleEntity/safety/FaultDealAADL.java">
+    <entry file="file://$PROJECT_DIR$/aadl(1).xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
+        <state relative-caret-position="228">
+          <caret line="12" column="60" lean-forward="true" selection-start-line="12" selection-start-column="60" selection-end-line="12" selection-end-column="60" />
         </state>
       </provider>
     </entry>
