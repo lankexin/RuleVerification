@@ -1,9 +1,6 @@
 package entity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Component {
    
@@ -22,7 +19,7 @@ public class Component {
     public Component() {
     	attrs = new HashMap<>();
     	stateList = new HashMap<>();
-    	subComponentList = new HashMap<String, Component>();
+    	subComponentList = new LinkedHashMap<String, Component>();
     	linkpointList = new ArrayList<>();
     	transitionList = new ArrayList<>();
     	portList = new ArrayList<Port>();

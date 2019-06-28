@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system name="isolette" wcet="15ms">
+    <component id="-1775010067" name="temperature_sensor" type="device" wcet="1ms">
+        <linkpoint direction="out" id="-1391296177" name="currentTemperature"/>
+    </component>
+    <component id="-99369205" name="thermostat" type="rtos" wcet="3ms">
+        <linkpoint datatype="signal" direction="in" id="634655689" name="operatorsettings" period="3ms"/>
+        <linkpoint datatype="signal" direction="out" id="1373550578" name="heating" period="3ms"/>
+        <linkpoint datatype="signal" direction="in" id="1757106529" name="currentTemperature" period="3ms"/>
+        <linkpoint datatype="signal" direction="out" id="1961665340" name="operatorFeedback" period="3ms"/>
+        <state id="-1458867722" name="Operational"/>
+        <state id="647884808" name="FailStop"/>
+        <transition dest="647884808" event="Failure" id="589757968" source="-1458867722"/>
+        <transition dest="-1458867722" event="Recoverevent" id="1433689445" source="647884808"/>
+        <partition id="-1556504187">
+            <task Name="temadjust" deadline="1ms" id="-1595937945" wcet="1ms">
+                <port direction="in" id="73937649" name="setting"/>
+                <port direction="in" id="740477284" name="ct"/>
+                <port direction="out" id="2001253689" name="heating"/>
+            </task>
+        </partition>
+        <partition id="-1292915272">
+            <task Name="feedback" deadline="1ms" id="962720599" wcet="1ms">
+                <port direction="out" id="770161393" name="feedback"/>
+                <port direction="in" id="1131856187" name="setting"/>
+            </task>
+        </partition>
+        <partition id="-1153351199">
+            <task Name="datadeal" deadline="1ms" id="604895991" wcet="2ms">
+                <port direction="out" id="-979576809" name="dataout"/>
+                <port direction="in" id="108166919" name="datain"/>
+                <task Name="format.impl" id="472083436">
+                    <port direction="out" id="-820422771" name="dataout"/>
+                    <port direction="in" id="671936945" name="datain"/>
+                </task>
+                <task Name="verify.impl" id="2055220131">
+                    <port direction="in" id="-168768359" name="datain"/>
+                    <port direction="out" id="1815887062" name="dataout"/>
+                </task>
+            </task>
+        </partition>
+        <task Name="setTemrange" deadline="1ms" id="-677581327" wcet="1ms">
+            <port direction="out" id="-2116268240" name="out4adjust"/>
+            <port direction="in" id="-712830817" name="insetting"/>
+            <port direction="out" id="816797465" name="out4back"/>
+        </task>
+        <connection dest="962720599" id="4" source="-677581327"/>
+        <connection dest="-1595937945" id="5" source="-677581327"/>
+        <connection dest="604895991" id="6" source="-99369205"/>
+        <connection dest="-677581327" id="7" source="-99369205"/>
+        <connection dest="-99369205" id="8" source="962720599"/>
+        <connection dest="-1595937945" id="9" source="604895991"/>
+        <connection dest="-99369205" id="10" source="-1595937945"/>
+    </component>
+    <component id="282110445" name="alarm" type="rtos">
+        <linkpoint datatype="signal" direction="in" id="683728425" name="currentT" period="3ms"/>
+    </component>
+    <component id="468029842" name="heatsource" type="device">
+        <linkpoint direction="in" id="-1922647315" name="heatcontrol"/>
+        <linkpoint direction="out" id="275660136" name="heat"/>
+    </component>
+    <component id="619608205" name="operatorinterface" type="rtos">
+        <linkpoint datatype="signal" direction="out" id="-990092032" name="outoperatorFeedback" period="3ms"/>
+        <linkpoint datatype="signal" direction="in" id="-552254850" name="inoperatorsettings" period="3ms"/>
+        <linkpoint datatype="signal" direction="in" id="-2862425" name="inoperatorFeedback" period="3ms"/>
+        <linkpoint datatype="signal" direction="out" id="1154062589" name="outoperatorsettings" period="3ms"/>
+    </component>
+    <communicationchannel dest="683728425" id="-2112820676" name="ct4a" source="-1391296177" type="sync"/>
+    <communicationchannel dest="1757106529" id="-1687027286" name="new_connection3" source="-1391296177" type="sync"/>
+    <communicationchannel dest="634655689" id="-1037575342" name="new_connection2" source="1154062589" type="sync"/>
+    <communicationchannel dest="-2862425" id="514910598" name="new_connection4" source="1961665340" type="sync"/>
+    <communicationchannel dest="-1922647315" id="1173504704" name="new_connection" source="1373550578" type="sync"/>
+</system>

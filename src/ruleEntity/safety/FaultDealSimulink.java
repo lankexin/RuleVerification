@@ -8,6 +8,7 @@ import entity.Transition;
 import java.util.*;
 
 //import static entity.State.attrsList;
+import static utils.KeySet.keySet;
 import static utils.XMLParseUtil.parseXML;
 
 public class FaultDealSimulink {
@@ -47,12 +48,8 @@ public class FaultDealSimulink {
 //        System.out.println(channelListSimulink);
 //        System.out.println(componentListSimulink);
 //        System.out.println(componentListSimulink.get("453762388").getStateList());
-        Set<String> componentSet = componentListSimulink.keySet();
-        Iterator<String> iter = componentSet.iterator();
-        while (iter.hasNext()) {
-            String str = iter.next();
-            componentList.add(str);
-        }
+
+        componentList=keySet(componentListSimulink);
 //        System.out.println(componentList);
 
         for (String componentId : componentList) {

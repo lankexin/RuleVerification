@@ -66,10 +66,12 @@ public class FaultType {
             String simulinkId=map.get("simulink").get("id");
             if(simulinkId.equals(componentIdSimulink)) {
                 String componentIDSysml = map.get("sysml").get("id");
-                Map<String, ExceptionXML> exceptions=componentListSysml.get(componentIDSysml).getExceptionList();
-                List<String> exceptionIdList=getExceptionIdList(exceptions);
-                for(String exceptionId:exceptionIdList){
-                    exceptionList.add(exceptions.get(exceptionId).getAttr("name"));
+                if(componentListSysml.get(componentIDSysml)!=null) {
+                    Map<String, ExceptionXML> exceptions = componentListSysml.get(componentIDSysml).getExceptionList();
+                    List<String> exceptionIdList = getExceptionIdList(exceptions);
+                    for (String exceptionId : exceptionIdList) {
+                        exceptionList.add(exceptions.get(exceptionId).getAttr("name"));
+                    }
                 }
             }
         }
@@ -97,23 +99,44 @@ public class FaultType {
      */
     public static List<Map<String,Map<String, String>>> mapping() {
         List<Map<String,Map<String, String>>> list=new ArrayList<>();
+
         Map<String,String> idSysml=new LinkedHashMap<>();
         idSysml.put("id","966564649");
+
         Map<String,String> idAADL=new LinkedHashMap<>();
         idAADL.put("id","1099650349");
+
         Map<String,String> idSimulink=new LinkedHashMap<>();
         idSimulink.put("id","453762388");
+
+        Map<String,String> idSysml_1=new LinkedHashMap<>();
+        idSysml_1.put("id","-587841842");
+
+        Map<String,String> idAADL_1=new LinkedHashMap<>();
+        idAADL_1.put("id","-99369205");
+
+        Map<String,String> idSimulink_1=new LinkedHashMap<>();
+        idSimulink_1.put("id","453762388");
+
         Map<String,Map<String, String>> mapModel=new LinkedHashMap<>();
         mapModel.put("sysml",idSysml);
         mapModel.put("aadl",idAADL);
         mapModel.put("simulink",idSimulink);
+
+        Map<String,Map<String, String>> mapModel1=new LinkedHashMap<>();
+        mapModel1.put("sysml",idSysml_1);
+        mapModel1.put("aadl",idAADL_1);
+        mapModel1.put("simulink",idSimulink_1);
+
         list.add(mapModel);
+        list.add(mapModel1);
+//        System.out.println(list);
         return list;
     }
 
 
     public static void main(String[] args){
+//        mapping();
         excute();
-//        sysmlTypes("453762388");
     }
 }

@@ -4,7 +4,6 @@ import entity.Channel;
 import entity.Component;
 import entity.State;
 import entity.Transition;
-
 import java.util.*;
 import static utils.XMLParseUtil.parseXML;
 
@@ -15,7 +14,7 @@ public class FaultDealAADL {
 
         Map<String, Channel> channelListAADL = new HashMap<>();
 
-        parseXML("aadl(1).xml", componentListAADL, channelListAADL);
+        parseXML("aadl(5).xml", componentListAADL, channelListAADL);
 
         Set<String> componentSet = componentListAADL.keySet();
         Iterator<String> iter = componentSet.iterator();
@@ -34,9 +33,11 @@ public class FaultDealAADL {
                 for (Transition transition : transitionList) {
                     String sourceState = transition.getAttr("source");
                     String destState = transition.getAttr("dest");
+//                    System.out.println(destState);
 //                    System.out.println(stateList.get(destState));
-                    if (destState.equals("FailStop")) {
-                        String log = process(componentName, destState, transitionList);
+
+                    if (stateList.get(destState).getAttr("name").equals("FailStop")) {
+                        String log = process(stateList,componentName, destState, transitionList);
                         System.out.println(log);
                     }
                 }
@@ -44,12 +45,14 @@ public class FaultDealAADL {
         }
     }
 
-    public static String process(String componentName, String faultState, List<Transition> transitionList) {
+    public static String process(Map<String, State> stateList,String componentName, String faultState, List<Transition> transitionList) {
         StringBuilder sb = new StringBuilder();
         boolean flag = false;
         for (Transition transition : transitionList) {
-            if (transition.getAttr("source").equals("FailStop") && transition.getAttr("dest")
-                                                                                     .equals("Operational")) {
+            String sourceDest=transition.getAttr("source");
+            String destState=transition.getAttr("dest");
+            if (stateList.get(sourceDest).getAttr("name").equals("FailStop") && stateList.get(destState)
+                                                            .getAttr("name").equals("Operational")) {
                 sb.append("component:" + componentName + "发生故障FailStop" + "恢复为正常状态处理故障");
                 flag = true;
             }

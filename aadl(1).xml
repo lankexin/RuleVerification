@@ -8,6 +8,7 @@
     </component>
     <component id="-1099650349" name="thermostat" type="rtos" wcet="3ms">
         <linkpoint direction="out" id="-2092512532" name="operatorFeedback" period="3ms"/>
+
         <linkpoint direction="out" id="-624619712" name="heating" period="3ms"/>
         <linkpoint direction="in" id="916760749" name="operatorsettings" period="3ms"/>
         <linkpoint direction="in" id="1471906835" name="currentTemperature" period="3ms"/>
