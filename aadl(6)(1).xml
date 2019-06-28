@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system name="isolette" wcet="15ms">
+	<component id="-1668131574" name="temperature_sensor" type="device" wcet="1ms">
+		<linkpoint direction="out" id="1737342796" name="currentTemperature"/>
+	</component>
+	<component id="161145622" name="thermostat" type="rtos" wcet="3ms">
+		<linkpoint datatype="signal" direction="in" id="-146836380" name="currentTemperature" period="3ms"/>
+		<linkpoint datatype="signal" direction="out" id="118489786" name="heating" period="3ms"/>
+		<linkpoint datatype="signal" direction="out" id="353490999" name="operatorFeedback" period="3ms"/>
+		<linkpoint datatype="signal" direction="in" id="571131014" name="operatorsettings" period="3ms"/>
+		<propagation fault="Violation、InvalidParameter、" id="1" name="ObservableFailure" port_id="353490999"/>
+		<state id="-1753315418" name="Operational"/>
+		<state id="-1123075886" name="FailStop"/>
+		<transition dest="-1123075886" event="Failure" id="1768496982" source="-1753315418"/>
+		<transition dest="-1753315418" event="Recoverevent" id="1093299435" source="-1123075886"/>
+		<partition id="-1222988721">
+			<task Name="temadjust" deadline="1ms" id="-1936400924" wcet="1ms">
+				<port direction="in" id="-1735403241" name="ct"/>
+				<port direction="in" id="601373628" name="setting"/>
+				<port direction="out" id="1848961680" name="heating"/>
+			</task>
+		</partition>
+		<partition id="1263862341">
+			<task Name="feedback" deadline="1ms" id="1623742644" wcet="1ms">
+				<port direction="out" id="-1194046078" name="feedback"/>
+				<port direction="in" id="1729610106" name="setting"/>
+			</task>
+		</partition>
+		<partition id="1327232081">
+			<task Name="datadeal" deadline="1ms" id="27757233" wcet="2ms">
+				<port direction="in" id="-1547279065" name="datain"/>
+				<port direction="out" id="1632679829" name="dataout"/>
+				<task Name="format.impl" id="1382362273">
+					<port direction="in" id="-691600013" name="datain"/>
+					<port direction="out" id="1815259135" name="dataout"/>
+				</task>
+				<task Name="verify.impl" id="1464827541">
+					<port direction="in" id="-1441953715" name="datain"/>
+					<port direction="out" id="2124151626" name="dataout"/>
+				</task>
+			</task>
+		</partition>
+		<task Name="setTemrange" deadline="1ms" id="976138694" wcet="1ms">
+			<port direction="out" id="-599442943" name="out4back"/>
+			<port direction="in" id="675578270" name="insetting"/>
+			<port direction="out" id="1571103597" name="out4adjust"/>
+		</task>
+		<connection dest="1623742644" id="4" source="976138694"/>
+		<connection dest="-1936400924" id="5" source="976138694"/>
+		<connection dest="27757233" id="6" source="161145622"/>
+		<connection dest="976138694" id="7" source="161145622"/>
+		<connection dest="161145622" id="8" source="1623742644"/>
+		<connection dest="-1936400924" id="9" source="27757233"/>
+		<connection dest="161145622" id="10" source="-1936400924"/>
+	</component>
+	<component id="342896293" name="heatsource" type="device">
+		<linkpoint direction="in" id="-741298466" name="heatcontrol"/>
+		<linkpoint direction="out" id="499269265" name="heat"/>
+	</component>
+	<component id="603263330" name="alarm" type="rtos" wcet="4ms">
+		<linkpoint datatype="signal" direction="in" id="762800587" name="currentT" period="3ms"/>
+	</component>
+	<component id="755214881" name="operatorinterface" type="rtos" wcet="2ms">
+		<linkpoint datatype="signal" direction="out" id="-1598694818" name="outoperatorsettings" period="3ms"/>
+		<linkpoint datatype="signal" direction="in" id="-504410910" name="inoperatorFeedback" period="3ms"/>
+		<linkpoint datatype="signal" direction="in" id="1632972226" name="inoperatorsettings" period="3ms"/>
+		<linkpoint datatype="signal" direction="out" id="1882447475" name="outoperatorFeedback" period="3ms"/>
+	</component>
+	<communicationchannel dest="-146836380" id="-142077951" name="new_connection3" source="1737342796" type="sync"/>
+	<communicationchannel dest="762800587" id="754120577" name="ct4a" source="1737342796" type="sync"/>
+	<communicationchannel dest="-741298466" id="1408486707" name="new_connection" source="118489786" type="sync"/>
+	<communicationchannel dest="-504410910" id="1460753936" name="new_connection4" source="353490999" type="sync"/>
+	<communicationchannel dest="571131014" id="1989474655" name="new_connection2" source="-1598694818" type="sync"/>
+</system>
