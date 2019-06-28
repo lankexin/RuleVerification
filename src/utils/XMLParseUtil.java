@@ -40,7 +40,7 @@ public class XMLParseUtil {
 		Map<String, Channel> channelListSysml = new HashMap<>();
 		
 		parseXML("simulink(2).xml", componentListSimulink, channelListSimulink);
-		parseXML("aadl(1).xml", componentListAadl, channelListAadl);
+		parseXML("aadl(6)(1).xml", componentListAadl, channelListAadl);
 		parseXML("sysml(1).xml", componentListSysml, channelListSysml);
 		
 //		System.out.println("\nsimulink存储的结果为：");
@@ -70,11 +70,15 @@ public class XMLParseUtil {
 		for (String componentKey : componentListAadl.keySet()) {
 			System.out.println("\nComponent id : " + componentKey);
 			componentListAadl.get(componentKey).attrsToString();
-			for (String subComponentKey : componentListAadl.get(componentKey).getSubComponentList().keySet()) {
-				System.out.println("Propagation id : " + subComponentKey);
-				componentListAadl.get(componentKey).getSubComponentList().get(subComponentKey).attrsToString();
+			for (String propagationKey : componentListAadl.get(componentKey).getPropagationList().keySet()) {
+				System.out.println("Propagation id : " + propagationKey);
+				componentListAadl.get(componentKey).getPropagationList().get(propagationKey).attrsToString();
 			}
 		}
+		
+//		if (componentListAadl.get("system") != null) {
+//			System.out.println(componentListAadl.get("system").getChannelList().size());
+//		}
 	}
 
 	public static void parseXML(String inputPath,
@@ -119,6 +123,9 @@ public class XMLParseUtil {
 				newChannel.setAttr(attr.getName(), attr.getValue());
 			}
 			channelList.put(newChannel.getAttr("id"), newChannel);
+			if (component.getParent() != null && component.getParent().getName().equals("system")) {
+				componentList.get("system").getChannelList().add(newChannel);
+			}
 		} else if (component.getName().equals("linkpoint")) {
 			String componentId = root.getParent().attribute("id").getValue();
 			Linkpoint newLinkpoint = new Linkpoint();
@@ -130,6 +137,8 @@ public class XMLParseUtil {
 			String componentId = root.getParent().attribute("id").getValue();
 			Connection newConnection = new Connection();
 			for (Attribute attr : componentAttrs) {
+//				System.out.print("属性名: " + attr.getName() + "   属性值: "
+//				+ attr.getValue() + "\n");
 				newConnection.setAttr(attr.getName(), attr.getValue());
 			}
 			componentList.get(componentId).getConnectionList().add(newConnection);
@@ -170,7 +179,7 @@ public class XMLParseUtil {
 			for (Attribute attr : componentAttrs) {
 				newPropagation.setAttr(attr.getName(), attr.getValue());
 			}
-			componentId = root.getParent().getParent().attribute("id").getValue();
+			componentId = root.getParent().attribute("id").getValue();
 			componentList.get(componentId).getPropagationList()
 						.put(newPropagation.getAttr("id"), newPropagation);
 		} else if (component.getName().equals("exception")) {

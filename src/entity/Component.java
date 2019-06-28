@@ -17,6 +17,7 @@ public class Component {
     List<Transition> transitionList;
     List<Port> portList;
     List<Connection> connectionList;
+    List<Channel> channelList;
 
     public Component() {
     	attrs = new HashMap<>();
@@ -26,6 +27,7 @@ public class Component {
     	transitionList = new ArrayList<>();
     	portList = new ArrayList<Port>();
     	connectionList = new ArrayList<Connection>();
+    	channelList = new ArrayList<Channel>();
 
     	exceptionList = new HashMap<String, ExceptionXML>();
     	propagationList = new HashMap<String, Propagation>();
@@ -64,6 +66,10 @@ public class Component {
     
     public List<Transition> getTransitionList() {
         return transitionList;
+    }
+    
+    public List<Channel> getChannelList() {
+        return channelList;
     }
     
     
