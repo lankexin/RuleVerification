@@ -5,6 +5,8 @@ import entity.Component;
 import entity.State;
 import entity.Transition;
 import java.util.*;
+
+import static utils.KeySet.keySet;
 import static utils.XMLParseUtil.parseXML;
 
 public class FaultDealAADL {
@@ -14,14 +16,9 @@ public class FaultDealAADL {
 
         Map<String, Channel> channelListAADL = new HashMap<>();
 
-        parseXML("aadl(5).xml", componentListAADL, channelListAADL);
+        parseXML("aadl(6).xml", componentListAADL, channelListAADL);
 
-        Set<String> componentSet = componentListAADL.keySet();
-        Iterator<String> iter = componentSet.iterator();
-        while (iter.hasNext()) {
-            String str = iter.next();
-            componentList.add(str);
-        }
+        componentList=keySet(componentListAADL);
 //        System.out.println(componentList);
 
         for (String componentId : componentList) {
@@ -52,7 +49,7 @@ public class FaultDealAADL {
             String sourceDest=transition.getAttr("source");
             String destState=transition.getAttr("dest");
             if (stateList.get(sourceDest).getAttr("name").equals("FailStop") && stateList.get(destState)
-                                                            .getAttr("name").equals("Operational")) {
+                    .getAttr("name").equals("Operational")) {
                 sb.append("component:" + componentName + "发生故障FailStop" + "恢复为正常状态处理故障");
                 flag = true;
             }

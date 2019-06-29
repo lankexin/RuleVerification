@@ -166,14 +166,13 @@ public class XMLParseUtil {
 			}
 			componentList.get(componentId).getStateList().put(newState.getAttr("id"), newState);
 		} else if (component.getName().equals("propagation")) {
-			String componentId;
+			String componentId= root.getParent().attribute("id").getValue();
 			Propagation newPropagation = new Propagation();
 			for (Attribute attr : componentAttrs) {
 				newPropagation.setAttr(attr.getName(), attr.getValue());
 			}
-			componentId = root.getParent().attribute("id").getValue();
 			componentList.get(componentId).getPropagationList()
-						.put(newPropagation.getAttr("id"), newPropagation);
+					.put(newPropagation.getAttr("name"), newPropagation);
 		} else if (component.getName().equals("exception")) {
 			String componentId = root.getParent().attribute("id").getValue();
 			ExceptionXML newException = new ExceptionXML();
