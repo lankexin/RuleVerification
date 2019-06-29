@@ -40,7 +40,7 @@ public class XMLParseUtil {
 		Map<String, Channel> channelListSysml = new HashMap<>();
 		
 		parseXML("simulink(2).xml", componentListSimulink, channelListSimulink);
-		parseXML("aadl(6)(1).xml", componentListAadl, channelListAadl);
+		parseXML("aadl(6).xml", componentListAadl, channelListAadl);
 		parseXML("sysml(1).xml", componentListSysml, channelListSysml);
 		
 //		System.out.println("\nsimulink存储的结果为：");
