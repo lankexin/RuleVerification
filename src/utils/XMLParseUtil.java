@@ -165,15 +165,7 @@ public class XMLParseUtil {
 				parentState.getSubStateList().add(newState);
 			}
 			componentList.get(componentId).getStateList().put(newState.getAttr("id"), newState);
-		} /*else if (component.getName().equals("error_propagations")) {
-			String componentId = root.getParent().attribute("id").getValue();
-			ErrorPropagations newErrorPropagations = new ErrorPropagations();
-			for (Attribute attr : componentAttrs) {
-				newErrorPropagations.setAttr(attr.getName(), attr.getValue());
-			}
-			componentList.get(componentId).getErrorPropagationList()
-						.put(newErrorPropagations.getAttr("id"), newErrorPropagations);
-		}*/ else if (component.getName().equals("propagation")) {
+		} else if (component.getName().equals("propagation")) {
 			String componentId;
 			Propagation newPropagation = new Propagation();
 			for (Attribute attr : componentAttrs) {
@@ -282,16 +274,6 @@ public class XMLParseUtil {
 				componentList.get(componentId).getSubComponentList().get(firstTaskId)
 							 .getPortList().add(newPort);
 			}
-//			if (root.getParent().getName().equals("component"))  {
-//				componentId = root.getParent().attribute("id").getValue();
-//			}
-//			else if (root.getParent().getName().equals("task")) {
-//				componentId = root.getParent().getParent().attribute("id").getValue();
-//				String taskId = root.getParent().attribute("id").getValue();
-//				Component parentState = componentList.get(componentId).getSubComponentList().get(taskId);
-//				parentState.getSubComponentList().put(newTask.getAttr("id"), newTask);
-//			}
-//			componentList.get(componentId).getSubComponentList().put(newTask.getAttr("id"), newTask);
 		}
 		
 		Iterator itt = component.elementIterator();

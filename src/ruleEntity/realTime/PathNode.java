@@ -55,4 +55,8 @@ public class PathNode {
 	public Map<String, Float> getPathWcet() {
 		return pathWcetList;
 	}
+	
+	public Component getComponent() {
+		return component;
+	}
 }

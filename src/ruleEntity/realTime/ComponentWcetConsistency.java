@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
+
+import com.sun.org.apache.regexp.internal.recompile;
 
 import entity.Channel;
 import entity.Component;
@@ -81,35 +84,51 @@ public class ComponentWcetConsistency {
 	}
 	
 	private static float getMaxPathWcet(Map<String, PathNode> pathNodeList) {
+		Stack<String> pathNodeIdStack = new Stack<String>();
 		float maxPathWcet = 0;
 		for (String pathNodeKeyString : pathNodeList.keySet()) {
 			if (pathNodeList.get(pathNodeKeyString).getIsFirst()) {
 				float maxPathWcetTemp = 0;
 				float currentWcet = pathNodeList.get(pathNodeKeyString).getWcet();
-				maxPathWcetTemp = calculateMaxWcet(maxPathWcetTemp, pathNodeList.get(pathNodeKeyString).getNextComponents(),
-						currentWcet);
+				pathNodeIdStack.add(pathNodeList.get(pathNodeKeyString).getId());
+				maxPathWcetTemp = calculateMaxWcet(maxPathWcetTemp, pathNodeList.get(pathNodeKeyString),
+						currentWcet, pathNodeIdStack);
 				//System.out.println(maxPathWcet + "max path wcet temp is " + maxPathWcetTemp);
 				if (maxPathWcet < maxPathWcetTemp) maxPathWcet = maxPathWcetTemp;
-				//System.out.println("max path wcet is " + maxPathWcet);
+				pathNodeIdStack.clear();
 			}
 		}
 		
 		return maxPathWcet;
 	}
 	
-	private static float calculateMaxWcet(float maxPathWcet, List<PathNode> pathNodeList, float currentWcet) {
-		if (pathNodeList.size() <= 0) {
+	private static float calculateMaxWcet(float maxPathWcet, 
+			PathNode pathNode, 
+			float currentWcet,
+			Stack<String> pathNodeIdStack) {
+		if (pathNode.getNextComponents().size() <= 0) {
 			//System.err.println(maxPathWcet + " current wcet is " + currentWcet);
 			if (currentWcet > maxPathWcet) maxPathWcet = currentWcet;
 			//System.err.println("max wcet is " + maxPathWcet);
 			return maxPathWcet;
 		} 
-		for (PathNode pathNode : pathNodeList) {
-			currentWcet += pathNode.getWcet();
+		
+		if (pathNodeIdStack.size() > 1) {
+			pathNodeIdStack.pop();
+			for (String id : pathNodeIdStack) {
+				if (pathNode.getId().equals(id)) {
+					return maxPathWcet;
+				}
+			}
+		}
+		for (PathNode nextPathNode : pathNode.getNextComponents()) {
+			currentWcet += nextPathNode.getWcet();
+			pathNodeIdStack.add(nextPathNode.getId());
 			//System.out.println(pathNode.getId());
 			//System.out.println("current wcet is " + currentWcet);
-			maxPathWcet = calculateMaxWcet(maxPathWcet, pathNode.getNextComponents(), currentWcet);
-			currentWcet -= pathNode.getWcet();
+			maxPathWcet = calculateMaxWcet(maxPathWcet, nextPathNode, currentWcet, pathNodeIdStack);
+			currentWcet -= nextPathNode.getWcet();
+			pathNodeIdStack.pop();
 		}
 		return maxPathWcet;
 	}
