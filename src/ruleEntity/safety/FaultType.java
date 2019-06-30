@@ -5,6 +5,7 @@ import utils.XMLParseUtil;
 
 import java.util.*;
 
+import static utils.Dataconnect.connect;
 import static utils.XMLParseUtil.parseXML;
 
 public class FaultType {
@@ -59,20 +60,36 @@ public class FaultType {
         Map<String, Component> componentListSysml = new HashMap<>();
         Map<String, Channel> channelListSysml = new HashMap<>();
 
-        XMLParseUtil.parseXML("sysml(1).xml", componentListSysml, channelListSysml);
+        XMLParseUtil.parseXML("sysml(4).xml", componentListSysml, channelListSysml);
 
         List<Map<String,Map<String, String>>> list=mapping();
-        for(Map<String,Map<String, String>> map:list){
-            String simulinkId=map.get("simulink").get("id");
-            if(simulinkId.equals(componentIdSimulink)) {
-                String componentIDSysml = map.get("sysml").get("id");
-                if(componentListSysml.get(componentIDSysml)!=null) {
-                    Map<String, ExceptionXML> exceptions = componentListSysml.get(componentIDSysml).getExceptionList();
-                    List<String> exceptionIdList = getExceptionIdList(exceptions);
-                    for (String exceptionId : exceptionIdList) {
-                        exceptionList.add(exceptions.get(exceptionId).getAttr("name"));
-                    }
-                }
+
+/**
+ for(Map<String,Map<String, String>> map:list){
+ String simulinkId=map.get("simulink").get("id");
+ if(simulinkId.equals(componentIdSimulink)) {
+ String componentIDSysml = map.get("sysml").get("id");
+ if(componentListSysml.get(componentIDSysml)!=null) {
+ Map<String, ExceptionXML> exceptions = componentListSysml.get(componentIDSysml)
+ .getExceptionList();
+ List<String> exceptionIdList = getExceptionIdList(exceptions);
+ for (String exceptionId : exceptionIdList) {
+ exceptionList.add(exceptions.get(exceptionId).getAttr("name"));
+ }
+ }
+ }
+ }
+ */
+        String sql="select * from mapping where simulink_id="+componentIdSimulink;
+//        System.out.println(sql);
+        String sysmlId=connect(sql,"sysml");
+        if(sysmlId!=null){
+//            System.out.println(sysmlId);
+            Map<String, ExceptionXML> exceptions = componentListSysml.get(sysmlId)
+                    .getExceptionList();
+            List<String> exceptionIdList = getExceptionIdList(exceptions);
+            for (String exceptionId : exceptionIdList) {
+                exceptionList.add(exceptions.get(exceptionId).getAttr("name"));
             }
         }
         System.out.println(exceptionList);
@@ -133,7 +150,6 @@ public class FaultType {
 //        System.out.println(list);
         return list;
     }
-
 
     public static void main(String[] args){
 //        mapping();
