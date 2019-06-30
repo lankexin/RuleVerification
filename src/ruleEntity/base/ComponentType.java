@@ -5,6 +5,7 @@ import entity.Component;
 import utils.XMLParseUtil;
 import java.util.*;
 import static ruleEntity.safety.FaultType.mapping;
+import static utils.Dataconnect.connect;
 import static utils.KeySet.keySet;
 
 public class ComponentType {
@@ -26,15 +27,23 @@ public class ComponentType {
 
         for(String sysmlCom:componentSysmlList) {
             String componentName = componentListSysml.get(sysmlCom).getAttr("name");
-            List<Map<String,Map<String, String>>> list=mapping();
+
+            /*List<Map<String,Map<String, String>>> list=mapping();
             String simulinkId="";
             for(Map<String,Map<String, String>> map:list){
                 if(map.get("sysml")!=null && map.get("sysml").get("id")!=null &&
                         map.get("sysml").get("id").equals(sysmlCom)){
                     simulinkId=map.get("simulink").get("id");
                 }
-            }
-            if(!simulinkId.isEmpty()){
+            }*/
+
+            String simulinkId="";
+
+            String sql="select * from mapping where sysml_id="+sysmlCom;
+//        System.out.println(sql);
+            simulinkId=connect(sql,"simulink");
+
+            if(simulinkId!=null && !simulinkId.isEmpty()){
                 String componentSysmlType = componentListSysml.get(sysmlCom).getAttr("type");
 //                System.out.println("componentType"+componentSysmlType);
                 String componentSimulinkType=componentListSimulink.get(simulinkId).getAttr("type");
