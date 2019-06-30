@@ -69,13 +69,13 @@ public class ComponentWcetConsistency {
 			if (subComponentList.get(destId) == null || subComponentList.get(sourceId) == null) continue;
 			if (pathNodeList.get(destId) != null) pathNodeList.get(destId).setIsFirst(false);
 			else {
-				PathNode newDestNode = new PathNode(destId, subComponentList.get(destId), false);
+				PathNode newDestNode = new PathNode(destId, subComponentList.get(destId).getAttr("wcet"), false);
 				pathNodeList.put(destId, newDestNode);
 			}
 			if (pathNodeList.get(sourceId) != null) {
 				pathNodeList.get(sourceId).getNextComponents().add(pathNodeList.get(destId));
 			} else {
-				PathNode newSourceNode = new PathNode(sourceId, subComponentList.get(sourceId), true);
+				PathNode newSourceNode = new PathNode(sourceId, subComponentList.get(sourceId).getAttr("wcet"), true);
 				newSourceNode.getNextComponents().add(pathNodeList.get(destId));
 				pathNodeList.put(sourceId, newSourceNode);
 			}

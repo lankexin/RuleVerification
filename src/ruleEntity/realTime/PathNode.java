@@ -9,20 +9,20 @@ import entity.Component;
 
 public class PathNode {
 
-	private Component component;
+	//private Component component;
 	private boolean isFirst;
 	private List<PathNode> nextNodeList;
 	private String id;
 	private Map<String, Float> pathWcetList;
 	float wcet = 0;
 	
-	public PathNode(String id, Component component, boolean isFirst) {
+	public PathNode(String id, String wcet, boolean isFirst) {
 		this.id = id;
 		this.isFirst = isFirst;
-		this.component = component;
+		//this.component = component;
 		nextNodeList = new ArrayList<PathNode>();
-		String wcetString = component.getAttr("wcet");
-		wcet = Float.valueOf(wcetString.substring(0, wcetString.length()-2));
+		//String wcetString = component.getAttr("wcet");
+		this.wcet = Float.valueOf(wcet.substring(0, wcet.length()-2));
 		pathWcetList = new HashMap<String, Float>();
 	}
 	
@@ -56,7 +56,7 @@ public class PathNode {
 		return pathWcetList;
 	}
 	
-	public Component getComponent() {
-		return component;
-	}
+//	public Component getComponent() {
+//		return component;
+//	}
 }
