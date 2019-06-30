@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system name="isolette" wcet="15ms">
+    <component name="检测环境温度" id="-2131953823" type="rtos"/>
+    <component name="报警" id="-2081887121" type="rtos"/>
+    <component name="设定温度范围" id="-2045953046" type="rtos"/>
+    <component name="控制热量产生" id="-1965419102" type="rtos"/>
+    <component name="设置温度范围子组件" id="-1373723140" type="rtos"/>
+    <component name="operator interface" id="-1339448997" type="rtos" wcet="2.0ms">
+        <linkpoint name="显示接口_in" id="211195078" period="3.0ms" direction="in" datatype="operator_setting"/>
+        <linkpoint name="feedback接口_in" id="1318319365" period="3.0ms" direction="in" datatype="operator_feedback"/>
+        <linkpoint name="输入接口_in" id="1464024349" period="3.0ms" direction="in" datatype="operator_setting"/>
+        <linkpoint name="设置接口_out" id="1529277321" period="3.0ms" direction="out" datatype="operator_setting"/>
+        <propagation name="故障类型有：InvalidParameter" fault="sysmlexception" id="17"/>
+        <propagation name="Violation" fault="sysmlexception" id="18"/>
+        <propagation name="UnexceptedError" fault="sysmlexception" id="19"/>
+        <propagation name="HandwareFault。故障处理的方式为：恢复型" fault="sysmlexception" id="20"/>
+        <propagation name="记录型。" fault="sysmlexception" id="21"/>
+        <task Name="operator_setting" id="-1579288439" period="3.0ms"/>
+        <task Name="显示" id="-392647582" wcet="1.0ms"/>
+        <task Name="输入设置" id="613576913" wcet="1.0ms"/>
+        <task Name="operator_setting" id="1205924495" period="3.0ms"/>
+    </component><component name="feedback" id="-1148149456" type="rtos"/>
+    <component name="温度调节子组件" id="-901704124" type="rtos"/>
+    <component name="数据处理" id="-815670554" type="rtos"/>
+    <component name="操作接口" id="-670181061" type="rtos"/>
+    <component name="设置温度范围" id="-420345729" type="rtos"/>
+    <component name="温度传感器" id="142582468" type="rtos"/>
+    <component name="heatsource" id="440975466" type="device">
+        <linkpoint name="heating_in" id="-789017697" period="3.0ms" direction="in" datatype="signal_heating"/>
+        <propagation name="故障类型有：InvalidParameter" fault="sysmlexception" id="7"/>
+        <propagation name="Violation" fault="sysmlexception" id="8"/>
+        <propagation name="UnexceptedError" fault="sysmlexception" id="9"/>
+        <propagation name="HandwareFault。故障处理的方式为：恢复型" fault="sysmlexception" id="10"/>
+        <propagation name="记录型。" fault="sysmlexception" id="11"/>
+    </component>
+    <component name="数据处理子组件" id="923541985" type="rtos"/>
+    <component name="调节温度" id="952650331" type="rtos"/>
+    <component name="Real" id="1073646981" type="rtos"/>
+    <component name="alarm" id="1293757098" type="rtos"/>
+    <component name="温度调节" id="1362189781" type="rtos"/>
+    <component name="thermostat" id="1441710865" type="rtos">
+        <linkpoint name="设置接口_in" id="-683620615" period="3.0ms" direction="in" datatype="operator_setting"/>
+        <linkpoint name="curr_tem_in" id="562342534" period="3.0ms" direction="inout" datatype="signal_curr_tem"/>
+        <linkpoint name="feedback接口_out" id="830228159" period="3.0ms" direction="out" datatype="operator_feedback"/>
+        <linkpoint name="heating_out" id="1723025467" period="3.0ms" direction="inout" datatype="signal_heating"/>
+        <propagation name="故障类型有：InvalidParameter" fault="sysmlexception" id="22"/>
+        <propagation name="Violation" fault="sysmlexception" id="23"/>
+        <propagation name="UnexceptedError" fault="sysmlexception" id="24"/>
+        <propagation name="HandwareFault。故障处理的方式为：恢复型" fault="sysmlexception" id="25"/>
+        <propagation name="记录型。" fault="sysmlexception" id="26"/>
+        <task Name="温度调节" id="-1552395167" wcet="1.0ms"><port name="heating_out" id="-351929736" direction="out"/>
+            <port name="curr_tem_in" id="1356714203" direction="in"/>
+        </task>
+        <task Name="feedback" id="-1477225009" wcet="1.0ms">
+            <port name="Port3" id="-31403713" direction="in"/>
+            <port name="Port2" id="1041232597" direction="in"/>
+        </task>
+        <task Name="operator_feedback" id="205228842" period="3.0ms"/>
+        <task Name="operator_feedback" id="802390293" period="3.0ms"/>
+        <task Name="设置温度范围" id="853261200" wcet="1.0ms">
+            <port name="Port3" id="-2081983236" direction="in"/>
+            <port name="Port4" id="1486941497" direction="in"/>
+        </task><task Name="数据处理" id="886229240" wcet="2.0ms">
+            <port name="curr_tem_out" id="-1607200632" direction="out"/>
+            <port name="curr_tem_in" id="1469840070" direction="in"/>
+            <task Name="数据故障处理" id="-815582075" wcet="1.0ms"/>
+            <task Name="数据验证" id="1403881701" wcet="1.0ms"/>
+            <task Name="数据格式化" id="1621873929" wcet="1.0ms"/>
+        </task>
+        <task Name="处理器" id="1029451748"/>
+    </component>
+    <component name="feedback子组件" id="1576806844" type="rtos"/>
+    <component name="温度自动调节器" id="1684200071" type="rtos"/>
+    <component name="热源" id="1826510425" type="rtos"/>
+    <component name="alarm" id="1837789402" type="rtos" wcet="4.0ms">
+        <linkpoint name="curr_tem_in" id="1925285348" period="3.0ms" direction="inout" datatype="signal_curr_tem"/>
+        <propagation name="故障类型有：InvalidParameter" fault="sysmlexception" id="12"/>
+        <propagation name="Violation" fault="sysmlexception" id="13"/>
+        <propagation name="UnexceptedError" fault="sysmlexception" id="14"/>
+        <propagation name="HandwareFault。故障处理的方式为：恢复型" fault="sysmlexception" id="15"/>
+        <propagation name="记录型。" fault="sysmlexception" id="16"/><task Name="发出警报" id="-1761060564" wcet="1.0ms">
+            <port name="curr_tem_in" id="-1092278527" direction="in"/>
+        </task>
+        <task Name="数据处理" id="-748916954" wcet="2.0ms">
+            <port name="curr_tem_in" id="1286278708" direction="in"/>
+            <port name="curr_tem_out" id="1860219494" direction="out"/>
+            <task Name="数据格式化" id="-1583477693" wcet="1.0ms"/>
+            <task Name="数据故障处理" id="-1139696893" wcet="1.0ms"/>
+            <task Name="数据验证" id="-472867428" wcet="1.0ms"/>
+        </task>
+        <task Name="温度检测" id="-422500352" wcet="2.0ms">
+            <port name="curr_tem_in" id="-914831804" direction="in"/>
+            <port name="ringring_out" id="593572196" direction="out"/>
+        </task>
+        <task Name="signal_ringring" id="1572523941"/>
+    </component>
+    <component name="temperatorsensor" id="1929873762" type="device" wcet="1.0ms">
+        <linkpoint name="curr_tem_out" id="-1107098096" direction="inout"/>
+        <propagation name="故障类型有：InvalidParameter" fault="sysmlexception" id="2"/>
+        <propagation name="Violation" fault="sysmlexception" id="3"/>
+        <propagation name="UnexceptedError" fault="sysmlexception" id="4"/>
+        <propagation name="HandwareFault。故障处理的方式为：恢复型" fault="sysmlexception" id="5"/>
+        <propagation name="记录型。" fault="sysmlexception" id="6"/>
+        <task Name="signal_curr_tem" id="337952946" period="3.0ms"/>
+    </component>
+    <communicationchannel name="ItemFlow24" id="-1821970425" type="sync" source="0" dest="0"/>
+    <communicationchannel name="ItemFlow19" id="-1480053187" type="sync" source="0" dest="0"/>
+    <communicationchannel name="ItemFlow74" id="-1107439338" type="sync" source="562342534" dest="1469840070"/>
+    <communicationchannel name="ItemFlow15" id="-990947146" type="sync" source="1860219494" dest="0"/>
+    <communicationchannel name="ItemFlow23" id="-962959344" type="sync" source="-351929736" dest="-789017697"/>
+    <communicationchannel name="ItemFlow14" id="-856494614" type="sync" source="0" dest="1286278708"/>
+    <communicationchannel name="ItemFlow16" id="-706104112" type="sync" source="593572196" dest="0"/>
+    <communicationchannel name="ItemFlow17" id="-581162655" type="sync" source="0" dest="1925285348"/>
+    <communicationchannel name="ItemFlow18" id="302354066" type="sync" source="-1107098096" dest="0"/>
+    <communicationchannel name="operator_setting" id="359647434" type="sync" source="0" dest="0"/>
+    <communicationchannel name="ItemFlow27" id="653590967" type="sync" source="1529277321" dest="-683620615"/>
+    <communicationchannel name="feedback" id="774590639" type="sync" source="0" dest="0"/>
+    <communicationchannel name="ItemFlow28" id="2025759918" type="sync" source="1318319365" dest="830228159"/>
+</system>

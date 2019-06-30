@@ -18,5 +18,10 @@ public class Transition {
 	public String getAttr(String key) {
     	return attrs.get(key);
     }
-	
+
+	public void attrsToString() {
+		for (String attrKey : attrs.keySet()) {
+			System.out.println(attrKey + " " + attrs.get(attrKey));
+		}
+	}
 }

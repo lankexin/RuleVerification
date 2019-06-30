@@ -23,6 +23,12 @@ public class Linkpoint {
     	return attrs.get(key);
     }
 
+    public void attrsToString() {
+        for (String attrKey : attrs.keySet()) {
+            System.out.println(attrKey + " " + attrs.get(attrKey));
+        }
+    }
+
 //    public String getName() {
 //        return name;
 //    }
