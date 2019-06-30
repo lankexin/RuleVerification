@@ -55,7 +55,6 @@ public class ComponentType {
         }
     }
 
-
     public static void main(String[] args) {
         excute();
     }
