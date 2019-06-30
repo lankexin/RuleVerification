@@ -133,7 +133,7 @@ public class ComponentWcetConsistency {
 		return maxPathWcet;
 	}
 	
-	public static void main(String[] atgs) {
+	public static void main(String[] args) {
 		excute();
 	}
 }

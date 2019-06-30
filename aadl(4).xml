@@ -41,7 +41,8 @@
             <task Name="format.impl" id="-1962070129">
                 <port name="datain" id="233952400" direction="in"/>
                 <port name="dataout" id="774081730" direction="out"/>
-            </task><task Name="verify.impl" id="1309745937">
+            </task>
+            <task Name="verify.impl" id="1309745937">
                 <port name="dataout" id="-897199193" direction="out"/>
                 <port name="datain" id="673399499" direction="in"/>
             </task>

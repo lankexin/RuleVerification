@@ -1,19 +1,25 @@
 package ruleEntity.realTime;
 
-import entity.*;
+import entity.Channel;
+import entity.Component;
+import entity.Connection;
+import sun.awt.image.ImageWatched;
 
 import java.util.*;
 
 import static utils.XMLParseUtil.parseXML;
 
-public class StateWcetComsistency {
+public class ReqAndDesignWcetConsistency {
 
     public static void excute() {
         Map<String, PathNode> pathNodeList = new HashMap<String, PathNode>();
+        Map<String, Component> componentListSysml = new LinkedHashMap<>();
+        Map<String, Channel> channelListSysml = new LinkedHashMap<>();
         Map<String, Component> componentListSimulink = new LinkedHashMap<>();
         Map<String, Channel> channelListSimulink = new LinkedHashMap<>();
 
-        parseXML("simulink(2).xml", componentListSimulink, channelListSimulink);
+        parseXML("simulink(4).xml", componentListSimulink, channelListSimulink);
+        parseXML("sysml0629.xml", componentListSysml, channelListSysml);
 //      System.out.println("\naadl存储的结果为：");
 //		for (String componentKey : componentListAadl.keySet()) {
 //			System.out.println("\nComponent id : " + componentKey);
@@ -24,48 +30,48 @@ public class StateWcetComsistency {
 //			}
 //		}
 
-        for (String componentKey : componentListSimulink.keySet()) {
-//        	System.out.println(componentKey + " connect list size is " +
-//        						componentListAadl.get(componentKey).getConnectionList().size());
-            if (componentListSimulink.get(componentKey).getTransitionList().size() > 0) {
-                System.out.println("has connections");
-                String wcetString = componentListSimulink.get(componentKey).getAttr("wcet");
-                float wcet = Float.valueOf(wcetString.substring(0, wcetString.length()-2));
-
-                getPathNode(componentListSimulink.get(componentKey).getTransitionList(),
-                        componentListSimulink.get(componentKey).getStateList(),
-                        pathNodeList);
-
-                //float maxPathWcet = getMaxPathWcet(pathNodeList);
-                getMaxPathWcet(pathNodeList);
-                System.out.println("max path wcet is " + getMaxPathWcet(pathNodeList));
-//        		if (pathNodeList.size() != 0) System.out.println(pathNodeList.size() + "\n");
-//        		for (String pathNodeKeyString : pathNodeList.keySet()) {
-//        			System.out.println(pathNodeKeyString + " " +
-//        					pathNodeList.get(pathNodeKeyString).getNextComponents().size() + "  " +
-//        					pathNodeList.get(pathNodeKeyString).getIsFirst() + " " +
-//        					pathNodeList.get(pathNodeKeyString).getWcet());
-//        		}
-            }
-        }
+//        for (String componentKey : componentListSimulink.keySet()) {
+////        	System.out.println(componentKey + " connect list size is " +
+////        						componentListAadl.get(componentKey).getConnectionList().size());
+//            if (componentListAadl.get(componentKey).getConnectionList().size() > 0) {
+//                System.out.println("has connections");
+//                String wcetString = componentListAadl.get(componentKey).getAttr("wcet");
+//                float wcet = Float.valueOf(wcetString.substring(0, wcetString.length()-2));
+//                //System.out.println("wcet is " + wcet);
+//                getPathNode(componentListAadl.get(componentKey).getConnectionList(),
+//                        componentListAadl.get(componentKey).getSubComponentList(),
+//                        pathNodeList);
+//
+//                //float maxPathWcet = getMaxPathWcet(pathNodeList);
+//                getMaxPathWcet(pathNodeList);
+//                System.out.println("max path wcet is " + getMaxPathWcet(pathNodeList));
+////        		if (pathNodeList.size() != 0) System.out.println(pathNodeList.size() + "\n");
+////        		for (String pathNodeKeyString : pathNodeList.keySet()) {
+////        			System.out.println(pathNodeKeyString + " " +
+////        					pathNodeList.get(pathNodeKeyString).getNextComponents().size() + "  " +
+////        					pathNodeList.get(pathNodeKeyString).getIsFirst() + " " +
+////        					pathNodeList.get(pathNodeKeyString).getWcet());
+////        		}
+//            }
+//        }
     }
 
-    private static void getPathNode(List<Transition> transitionList,
-                                    Map<String, State> stateList,
+    private static void getPathNode(List<Connection> connectionList,
+                                    Map<String, Component> subComponentList,
                                     Map<String, PathNode> pathNodeList) {
-        for (Transition transition : transitionList) {
-            String sourceId = transition.getAttr("source");
-            String destId = transition.getAttr("dest");
-            if (stateList.get(destId) == null || stateList.get(sourceId) == null) continue;
+        for (Connection connection : connectionList) {
+            String sourceId = connection.getAttr("source");
+            String destId = connection.getAttr("dest");
+            if (subComponentList.get(destId) == null || subComponentList.get(sourceId) == null) continue;
             if (pathNodeList.get(destId) != null) pathNodeList.get(destId).setIsFirst(false);
             else {
-                PathNode newDestNode = new PathNode(destId, stateList.get(destId).getAttr("wcet"), false);
+                PathNode newDestNode = new PathNode(destId, subComponentList.get(destId).getAttr("wcet"), false);
                 pathNodeList.put(destId, newDestNode);
             }
             if (pathNodeList.get(sourceId) != null) {
                 pathNodeList.get(sourceId).getNextComponents().add(pathNodeList.get(destId));
             } else {
-                PathNode newSourceNode = new PathNode(sourceId, stateList.get(sourceId).getAttr("wcet"), true);
+                PathNode newSourceNode = new PathNode(sourceId, subComponentList.get(sourceId).getAttr("wcet"), true);
                 newSourceNode.getNextComponents().add(pathNodeList.get(destId));
                 pathNodeList.put(sourceId, newSourceNode);
             }
@@ -74,7 +80,6 @@ public class StateWcetComsistency {
     }
 
     private static float getMaxPathWcet(Map<String, PathNode> pathNodeList) {
-        System.out.println(pathNodeList.size());
         Stack<String> pathNodeIdStack = new Stack<String>();
         float maxPathWcet = 0;
         for (String pathNodeKeyString : pathNodeList.keySet()) {
@@ -115,6 +120,8 @@ public class StateWcetComsistency {
         for (PathNode nextPathNode : pathNode.getNextComponents()) {
             currentWcet += nextPathNode.getWcet();
             pathNodeIdStack.add(nextPathNode.getId());
+            //System.out.println(pathNode.getId());
+            //System.out.println("current wcet is " + currentWcet);
             maxPathWcet = calculateMaxWcet(maxPathWcet, nextPathNode, currentWcet, pathNodeIdStack);
             currentWcet -= nextPathNode.getWcet();
             pathNodeIdStack.pop();

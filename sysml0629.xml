@@ -19,7 +19,8 @@
         <task Name="显示" id="-392647582" wcet="1.0ms"/>
         <task Name="输入设置" id="613576913" wcet="1.0ms"/>
         <task Name="operator_setting" id="1205924495" period="3.0ms"/>
-    </component><component name="feedback" id="-1148149456" type="rtos"/>
+    </component>
+    <component name="feedback" id="-1148149456" type="rtos"/>
     <component name="温度调节子组件" id="-901704124" type="rtos"/>
     <component name="数据处理" id="-815670554" type="rtos"/>
     <component name="操作接口" id="-670181061" type="rtos"/>
@@ -48,7 +49,8 @@
         <propagation name="UnexceptedError" fault="sysmlexception" id="24"/>
         <propagation name="HandwareFault。故障处理的方式为：恢复型" fault="sysmlexception" id="25"/>
         <propagation name="记录型。" fault="sysmlexception" id="26"/>
-        <task Name="温度调节" id="-1552395167" wcet="1.0ms"><port name="heating_out" id="-351929736" direction="out"/>
+        <task Name="温度调节" id="-1552395167" wcet="1.0ms">
+            <port name="heating_out" id="-351929736" direction="out"/>
             <port name="curr_tem_in" id="1356714203" direction="in"/>
         </task>
         <task Name="feedback" id="-1477225009" wcet="1.0ms">
@@ -78,7 +80,8 @@
         <propagation name="Violation" fault="sysmlexception" id="13"/>
         <propagation name="UnexceptedError" fault="sysmlexception" id="14"/>
         <propagation name="HandwareFault。故障处理的方式为：恢复型" fault="sysmlexception" id="15"/>
-        <propagation name="记录型。" fault="sysmlexception" id="16"/><task Name="发出警报" id="-1761060564" wcet="1.0ms">
+        <propagation name="记录型。" fault="sysmlexception" id="16"/>
+        <task Name="发出警报" id="-1761060564" wcet="1.0ms">
             <port name="curr_tem_in" id="-1092278527" direction="in"/>
         </task>
         <task Name="数据处理" id="-748916954" wcet="2.0ms">
