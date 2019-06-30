@@ -157,6 +157,7 @@ public class XMLParseUtil {
 			}
 			if (root.getParent().getName().equals("component"))  {
 				componentId = root.getParent().attribute("id").getValue();
+				componentList.get(componentId).getStateList().put(newState.getAttr("id"), newState);
 			}
 			else {
 				componentId = root.getParent().getParent().attribute("id").getValue();
@@ -164,7 +165,7 @@ public class XMLParseUtil {
 				State parentState = componentList.get(componentId).getStateList().get(stateId);
 				parentState.getSubStateList().add(newState);
 			}
-			componentList.get(componentId).getStateList().put(newState.getAttr("id"), newState);
+			//componentList.get(componentId).getStateList().put(newState.getAttr("id"), newState);
 		} else if (component.getName().equals("propagation")) {
 			String componentId= root.getParent().attribute("id").getValue();
 			Propagation newPropagation = new Propagation();
