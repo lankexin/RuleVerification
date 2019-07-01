@@ -27,10 +27,14 @@
     <component name="温度调节子组件" id="-966202320" type="rtos"/>
     <component name="设定温度范围" id="-714523231" type="rtos"/>
     <component name="设置温度范围子组件" id="-631317113" type="rtos"/>
-    <component name="thermostat" id="-587841842" type="rtos">
+    <component name="thermostat" id="-587841842" type="rtos--">
         <linkpoint name="feedback接口_out" id="341749623" period="3.0ms" direction="in" datatype="operator_feedback"/>
+        <!--随便加的-->
+        <linkpoint name="Heat_Control" id="2222" period="3.0ms" direction="out" datatype="signal_curr_tem"/>
+
         <linkpoint name="curr_tem_in" id="835966014" period="3.0ms" direction="out" datatype="signal_curr_tem"/>
         <linkpoint name="设置接口_in" id="2005808910" period="3.0ms" direction="in" datatype="operator_setting"/>
+
         <exception name="InvalidParameter"/>
         <exception name="Violation"/>
         <exception name="UnexceptedError"/>

@@ -8,11 +8,14 @@
 		<linkpoint datatype="signal" direction="out" id="118489786" name="heating" period="3ms"/>
 		<linkpoint datatype="signal" direction="out" id="353490999" name="operatorFeedback" period="3ms"/>
 		<linkpoint datatype="signal" direction="in" id="571131014" name="operatorsettings" period="3ms"/>
+
 		<propagation fault="Violation、InvalidParameter、" id="1" name="ObservableFailure" port_id="353490999"/>
+
 		<state id="-1753315418" name="Operational"/>
 		<state id="-1123075886" name="FailStop"/>
 		<transition dest="-1123075886" event="Failure" id="1768496982" source="-1753315418"/>
 		<transition dest="-1753315418" event="Recoverevent" id="1093299435" source="-1123075886"/>
+
 		<partition id="-1222988721">
 			<task Name="temadjust" deadline="1ms" id="-1936400924" wcet="1ms">
 				<port direction="in" id="-1735403241" name="ct"/>
@@ -65,6 +68,14 @@
 		<linkpoint datatype="signal" direction="in" id="-504410910" name="inoperatorFeedback" period="3ms"/>
 		<linkpoint datatype="signal" direction="in" id="1632972226" name="inoperatorsettings" period="3ms"/>
 		<linkpoint datatype="signal" direction="out" id="1882447475" name="outoperatorFeedback" period="3ms"/>
+
+		<!--<propagation fault="Violation、InvalidParameter、" id="2" name="ObservableFailure" port_id="-504410910"/>-->
+		<!--<state id="-1753315418" name="Operational"/>-->
+		<!--<state id="-1123075886" name="FailStop"/>-->
+		<!--<transition dest="-1123075886" event="Failure" id="1768496982" source="-1753315418"/>-->
+		<!--<transition dest="-1753315418" event="Recoverevent" id="1093299435" source="-1123075886"/>-->
+
+
 	</component>
 	<communicationchannel dest="-146836380" id="-142077951" name="new_connection3" source="1737342796" type="sync"/>
 	<communicationchannel dest="762800587" id="754120577" name="ct4a" source="1737342796" type="sync"/>

@@ -6,6 +6,7 @@ import utils.XMLParseUtil;
 import java.util.*;
 
 import static utils.Dataconnect.connect;
+import static utils.KeySet.keySet;
 import static utils.XMLParseUtil.parseXML;
 
 public class FaultType {
@@ -14,35 +15,23 @@ public class FaultType {
      */
     public static void excute() {
         Map<String, Component> componentListSimulink = new LinkedHashMap<>();
-        List<String> componentList = new ArrayList<>();
 
         Map<String, Channel> channelListSimulink = new LinkedHashMap<>();
 
         parseXML("simulink(2).xml", componentListSimulink, channelListSimulink);
 //        System.out.println(componentListSimulink.get("453762388").getStateList().get("23456").getAttr("faultType"));
 
-        Set<String> componentSet = componentListSimulink.keySet();
-        Iterator<String> iter = componentSet.iterator();
-        while (iter.hasNext()) {
-            String str = iter.next();
-            componentList.add(str);
-        }
+        List<String> componentList =keySet(componentListSimulink);
         for (String componentId : componentList) {
             Map<String, State> stateList = componentListSimulink.get(componentId).getStateList();
             String componentName = componentListSimulink.get(componentId).getAttr("name");
             if(stateList!=null) {
-                Set<String> stateSet = stateList.keySet();
-//                System.out.println(stateSet);
-                List<String> stateIds = new ArrayList<>();
+                List<String> stateIds = keySet(stateList);
 
-                Iterator<String> it = stateSet.iterator();
-                while (it.hasNext()) {
-                    String str = it.next();
-                    stateIds.add(str);
-                }
                 for(String stateId:stateIds){
                     String faultType=stateList.get(stateId).getAttr("faultType");
-//                    System.out.println(faultType);
+
+
                     if(faultType!=null) {
                         List<String> exceptions = sysmlTypes(componentId);
                         if (!exceptions.contains(faultType)) {
@@ -50,6 +39,17 @@ public class FaultType {
                         }
                     }
 
+
+                    List<State> subStateList=stateList.get(stateId).getSubStateList();
+                    for(State subState:subStateList){
+                        String subFaultType=subState.getAttr("faultType");
+                        if(subFaultType!=null){
+                            List<String> exceptionList = sysmlTypes(componentId);
+                            if (!exceptionList.contains(subFaultType)) {
+                                System.out.println("component:" + componentName + "的故障类型" + subFaultType + "未在需求中定义");
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -81,12 +81,13 @@ public class FaultType {
  }
  */
         String sql="select * from mapping where simulink_id="+componentIdSimulink;
+//        System.out.println(componentIdSimulink);
 //        System.out.println(sql);
         String sysmlId=connect(sql,"sysml");
+//        System.out.println(sysmlId);
         if(sysmlId!=null){
 //            System.out.println(sysmlId);
-            Map<String, ExceptionXML> exceptions = componentListSysml.get(sysmlId)
-                    .getExceptionList();
+            Map<String, ExceptionXML> exceptions = componentListSysml.get(sysmlId).getExceptionList();
             List<String> exceptionIdList = getExceptionIdList(exceptions);
             for (String exceptionId : exceptionIdList) {
                 exceptionList.add(exceptions.get(exceptionId).getAttr("name"));

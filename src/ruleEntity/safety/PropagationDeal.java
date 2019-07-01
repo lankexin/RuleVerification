@@ -39,7 +39,7 @@ public class PropagationDeal {
                     if (linkpoint.getAttr("id").equals(destPort))
                         direction = linkpoint.getAttr("direction");
                 }
-                System.out.println(direction);
+//                System.out.println(direction);
                 if (("out").equals(direction)) {
                     boolean prop = false;
                     String destId = "";
@@ -49,7 +49,7 @@ public class PropagationDeal {
                             destId = channelListAADL.get(channel).getAttr("dest");
                         }
                     }
-                    System.out.println(destId);
+//                    System.out.println(destId);
                     if (!destId.isEmpty()) {
                         for (String compoId : componentList) {
                             String compoName = componentListAADL.get(compoId).getAttr("name");
@@ -62,7 +62,7 @@ public class PropagationDeal {
                                         String portId = propagations.get(propoga).getAttr("port_id");
                                         String faultType = propagations.get(propoga).getAttr("fault");
                                         if (portId.equals(destId) && faultType.equals(fault)) {
-                                            System.out.println("----");
+//                                            System.out.println("----");
                                             prop = true;
                                             List<Transition> transitionList = componentListAADL.get(compoId).getTransitionList();
                                             Map<String, State> stateList = componentListAADL.get(compoId).getStateList();

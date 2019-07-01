@@ -22,10 +22,12 @@ public class ComponentType {
         XMLParseUtil.parseXML("simulink(2).xml", componentListSimulink,channelListSimulink);
         XMLParseUtil.parseXML("sysml(4).xml", componentListSysml, channelListSysml);
 
-        List<String> componentSysmlList = new ArrayList<>();
-        componentSysmlList = keySet(componentListSysml);
+        List<String> componentSysmlList = keySet(componentListSysml);
+//        System.out.println(componentSysmlList);
 
         for(String sysmlCom:componentSysmlList) {
+            if(sysmlCom.equals("system"))
+                continue;
             String componentName = componentListSysml.get(sysmlCom).getAttr("name");
 
             /*List<Map<String,Map<String, String>>> list=mapping();
@@ -45,9 +47,9 @@ public class ComponentType {
 
             if(simulinkId!=null && !simulinkId.isEmpty()){
                 String componentSysmlType = componentListSysml.get(sysmlCom).getAttr("type");
-//                System.out.println("componentType"+componentSysmlType);
                 String componentSimulinkType=componentListSimulink.get(simulinkId).getAttr("type");
-                if(componentSysmlType.equals(componentSimulinkType))
+
+                if(!componentSysmlType.equals(componentSimulinkType))
                     System.out.println("Sysml模型中的组件"+componentName+"的组件类型与子系统设计模型中的组件不一致");
             }
             else
