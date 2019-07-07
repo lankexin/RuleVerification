@@ -1,13 +1,18 @@
 package ruleEntity.base;
 
-import static utils.XMLParseUtil.parseXML;
+import entity.Channel;
+import entity.Component;
+import entity.Linkpoint;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import entity.Channel;
-import entity.Component;
-import entity.Linkpoint;
+import static utils.XMLParseUtil.parseXML;
+
+/*
+* Author：lankx
+* 手动验证文档，一致性规则，第4条
+* */
 
 public class MessageNameConsistency {
 	
@@ -22,8 +27,8 @@ public class MessageNameConsistency {
         Map<String, Channel> channelListSimulink = new LinkedHashMap<>();
         
         parseXML("sysml0629.xml", componentListSysml, channelListSysml);
-        parseXML("simulink(2).xml", componentListSimulink, channelListSimulink);
-        parseXML("aadl(4).xml", componentListAadl, channelListAadl);
+        parseXML("simulink0703.xml", componentListSimulink, channelListSimulink);
+        parseXML("aadl(9).xml", componentListAadl, channelListAadl);
         
         System.out.println("sysml:");
         messageNameCheck(componentListSysml, channelListSysml);
@@ -60,10 +65,10 @@ public class MessageNameConsistency {
 		}
 	}
 	
-	private static void checkTargetProperty(Linkpoint sourceLinkpoint, 
-									 Linkpoint destLinkpoint, 
-									 Channel currentChannel,
-									 String targetProperty) {
+	private static void checkTargetProperty(Linkpoint sourceLinkpoint,
+                                            Linkpoint destLinkpoint,
+                                            Channel currentChannel,
+                                            String targetProperty) {
 		
 		if (sourceLinkpoint.getAttr(targetProperty) == null) {
 			sourceLinkpoint.attrsToString();

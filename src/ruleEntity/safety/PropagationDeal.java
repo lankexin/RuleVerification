@@ -19,11 +19,9 @@ public class PropagationDeal {
         Map<String, Channel> channelListAADL = new LinkedHashMap<>();
         parseXML("aadl(6).xml", componentListAADL, channelListAADL);
 
-        List<String> componentList = new LinkedList<>();
-        componentList = keySet(componentListAADL);
+        List<String> componentList = keySet(componentListAADL);
 
-        List<String> channelList = new LinkedList<>();
-        channelList = keySet(channelListAADL);
+        List<String> channelList = keySet(channelListAADL);
 
         for (String componentId : componentList) {
             Map<String, Propagation> propagationList = componentListAADL.get(componentId).getPropagationList();
@@ -64,7 +62,8 @@ public class PropagationDeal {
                                         if (portId.equals(destId) && faultType.equals(fault)) {
 //                                            System.out.println("----");
                                             prop = true;
-                                            List<Transition> transitionList = componentListAADL.get(compoId).getTransitionList();
+                                            List<Transition> transitionList = componentListAADL.get(compoId)
+                                                    .getTransitionList();
                                             Map<String, State> stateList = componentListAADL.get(compoId).getStateList();
                                             String componentName_1 = componentListAADL.get(compoId).getAttr("name");
                                             if (transitionList != null) {
@@ -72,8 +71,8 @@ public class PropagationDeal {
                                                     String dest = transition.getAttr("dest");
                                                     if (stateList.get(dest).getAttr("name").equals("FailStop")) {
                                                         String log = process(stateList, componentName_1, dest, transitionList);
-                                                        System.out.println("component:" + componentName + "的故障传播到" + "component:"
-                                                                + compoName);
+                                                        System.out.println("component:" + componentName + "的故障传播到" +
+                                                                "component:" + compoName);
                                                         System.out.println(log);
                                                     }
                                                 }
@@ -95,12 +94,11 @@ public class PropagationDeal {
         }
     }
 
-
     public static List<String> getComponentIdList() {
         Map<String, Component> componentListAADL = new LinkedHashMap<>();
         List<String> componentList = new ArrayList<>();
         Map<String, Channel> channelListAADL = new LinkedHashMap<>();
-        parseXML("aadl(6).xml", componentListAADL, channelListAADL);
+        parseXML("aadl(9).xml", componentListAADL, channelListAADL);
         Set<String> componentSet = componentListAADL.keySet();
         Iterator<String> iter = componentSet.iterator();
         while (iter.hasNext()) {

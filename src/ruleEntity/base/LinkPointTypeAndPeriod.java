@@ -1,13 +1,18 @@
 package ruleEntity.base;
 
-import static utils.XMLParseUtil.parseXML;
+import entity.Channel;
+import entity.Component;
+import entity.Linkpoint;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import entity.Channel;
-import entity.Component;
-import entity.Linkpoint;
+import static utils.XMLParseUtil.parseXML;
+
+/*
+* Author：lankx
+* 手动验证文档，一致性验证，第二条
+* */
 
 public class LinkPointTypeAndPeriod {
 
@@ -21,7 +26,7 @@ public class LinkPointTypeAndPeriod {
 		Map<String, Component> componentListSimulink = new LinkedHashMap<>();
         Map<String, Channel> channelListSimulink = new LinkedHashMap<>();
         
-        parseXML("aadl(4).xml", componentListAadl, channelListAadl);
+        parseXML("aadl(9).xml", componentListAadl, channelListAadl);
         parseXML("sysml(4).xml", componentListSysml, channelListSysml);
         parseXML("simulink(2).xml", componentListSimulink, channelListSimulink);
 //      System.out.println("\naadl存储的结果为：");
@@ -83,10 +88,10 @@ public class LinkPointTypeAndPeriod {
 		}
 	}
 	
-	private static void checkTargetProperty(Linkpoint sourceLinkpoint, 
-									 Linkpoint destLinkpoint, 
-									 Channel currentChannel,
-									 String targetProperty) {
+	private static void checkTargetProperty(Linkpoint sourceLinkpoint,
+                                            Linkpoint destLinkpoint,
+                                            Channel currentChannel,
+                                            String targetProperty) {
 		if (sourceLinkpoint.getAttr(targetProperty) == null) {
 			System.out.println("Channel " + currentChannel.getAttr("id") + " : " + 
 					sourceLinkpoint.getAttr("name") + " does not have " + targetProperty + ".");

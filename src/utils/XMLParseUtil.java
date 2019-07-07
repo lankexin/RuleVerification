@@ -1,27 +1,16 @@
 package utils;
 
-import java.util.ArrayList;
+import entity.*;
+import org.dom4j.Attribute;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import org.dom4j.*;
-import org.dom4j.io.SAXReader;
-
-import com.sun.xml.internal.bind.v2.TODO;
-import com.sun.xml.internal.ws.client.SenderException;
-
-import entity.Channel;
-import entity.Component;
-import entity.Connection;
-import entity.ErrorPropagations;
-import entity.ExceptionXML;
-import entity.Linkpoint;
-import entity.Port;
-import entity.Propagation;
-import entity.State;
-import entity.Transition;
 
 public class XMLParseUtil {
 	
@@ -134,21 +123,69 @@ public class XMLParseUtil {
 			}
 			componentList.get(componentId).getLinkpointList().add(newLinkpoint);
 		} else if (component.getName().equals("connection")) {
-			String componentId = root.getParent().attribute("id").getValue();
+			String componentId = null;
+			String parentTaskId = null;
+			String partitionID = null;
+			Element rootParent = root;
 			Connection newConnection = new Connection();
 			for (Attribute attr : componentAttrs) {
-//				System.out.print("属性名: " + attr.getName() + "   属性值: "
-//				+ attr.getValue() + "\n");
 				newConnection.setAttr(attr.getName(), attr.getValue());
 			}
-			componentList.get(componentId).getConnectionList().add(newConnection);
+			if (rootParent.getParent().getName().equals("task")) {
+				rootParent = rootParent.getParent();
+				parentTaskId = rootParent.attribute("id").getValue();
+			}
+			if (rootParent.getParent().getName().equals("partition")) {
+				rootParent = rootParent.getParent();
+				partitionID = rootParent.attribute("id").getValue();
+			}
+			if (rootParent.getParent().getName().equals("component")) {
+				rootParent = rootParent.getParent();
+				componentId = rootParent.attribute("id").getValue();
+			}
+			if (partitionID != null && parentTaskId != null) {
+				componentList.get(componentId).getSubComponentList().get(partitionID)
+						.getSubComponentList().get(parentTaskId).getConnectionList()
+						.add(newConnection);
+			} else if (partitionID != null) {
+				componentList.get(componentId).getSubComponentList().get(partitionID)
+						.getConnectionList().add(newConnection);
+			} else if (parentTaskId != null) {
+				componentList.get(componentId).getSubComponentList().get(parentTaskId)
+						.getConnectionList().add(newConnection);
+			} else {
+				componentList.get(componentId).getConnectionList().add(newConnection);
+			}
+			//componentList.get(componentId).getSubComponentList().put(newTask.getAttr("id"), newTask);
 		} else if (component.getName().equals("transition")) {
-			String componentId = root.getParent().attribute("id").getValue();
+//			String componentId = root.getParent().attribute("id").getValue();
+//			Transition newTransition = new Transition();
+//			for (Attribute attr : componentAttrs) {
+//				newTransition.setAttr(attr.getName(), attr.getValue());
+//			}
+//			componentList.get(componentId).getTransitionList().add(newTransition);
+
+			String componentId = null;
+			String parentStateId = null;
+			Element rootParent = root;
 			Transition newTransition = new Transition();
 			for (Attribute attr : componentAttrs) {
 				newTransition.setAttr(attr.getName(), attr.getValue());
 			}
-			componentList.get(componentId).getTransitionList().add(newTransition);
+			if (rootParent.getParent().getName().equals("state")) {
+				rootParent = rootParent.getParent();
+				parentStateId = rootParent.attribute("id").getValue();
+			}
+			if (rootParent.getParent().getName().equals("component")) {
+				rootParent = rootParent.getParent();
+				componentId = rootParent.attribute("id").getValue();
+			}
+			if (parentStateId != null) {
+				componentList.get(componentId).getStateList().get(parentStateId)
+						.getTransitionList().add(newTransition);
+			} else {
+				componentList.get(componentId).getTransitionList().add(newTransition);
+			}
 		} else if (component.getName().equals("state")) {
 			String componentId;
 			State newState = new State();
@@ -187,6 +224,7 @@ public class XMLParseUtil {
 		} else if (component.getName().equals("partition")) {
 			String componentId = root.getParent().attribute("id").getValue();
 			Component newPartition = new Component();
+			newPartition.setAttr("type", "partition");
 			for (Attribute attr : componentAttrs) {
 				newPartition.setAttr(attr.getName(), attr.getValue());
 			}

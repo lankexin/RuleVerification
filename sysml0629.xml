@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<system name="isolette" wcet="15ms">
+<system name="isolette" delay="15ms">
     <component name="检测环境温度" id="-2131953823" type="rtos"/>
     <component name="报警" id="-2081887121" type="rtos"/>
     <component name="设定温度范围" id="-2045953046" type="rtos"/>
@@ -62,7 +62,8 @@
         <task Name="设置温度范围" id="853261200" wcet="1.0ms">
             <port name="Port3" id="-2081983236" direction="in"/>
             <port name="Port4" id="1486941497" direction="in"/>
-        </task><task Name="数据处理" id="886229240" wcet="2.0ms">
+        </task>
+        <task Name="数据处理" id="886229240" wcet="2.0ms">
             <port name="curr_tem_out" id="-1607200632" direction="out"/>
             <port name="curr_tem_in" id="1469840070" direction="in"/>
             <task Name="数据故障处理" id="-815582075" wcet="1.0ms"/>

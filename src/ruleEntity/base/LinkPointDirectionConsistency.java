@@ -1,13 +1,18 @@
 package ruleEntity.base;
 
-import static utils.XMLParseUtil.parseXML;
+import entity.Channel;
+import entity.Component;
+import entity.Linkpoint;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import entity.Channel;
-import entity.Component;
-import entity.Linkpoint;
+import static utils.XMLParseUtil.parseXML;
+
+/*
+* Author：lankx
+* 手动验证文档，一致性规则，第三条
+* */
 
 public class LinkPointDirectionConsistency {
 
@@ -57,10 +62,10 @@ public class LinkPointDirectionConsistency {
 		}
 	}
 	
-	private static void checkTargetProperty(Linkpoint sourceLinkpoint, 
-									 Linkpoint destLinkpoint, 
-									 Channel currentChannel,
-									 String targetProperty) {
+	private static void checkTargetProperty(Linkpoint sourceLinkpoint,
+                                            Linkpoint destLinkpoint,
+                                            Channel currentChannel,
+                                            String targetProperty) {
 		
 		if (sourceLinkpoint.getAttr(targetProperty) == null) {
 			sourceLinkpoint.attrsToString();
